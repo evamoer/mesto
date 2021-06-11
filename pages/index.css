@@ -1,3 +1,9 @@
+/* ---------- Fonts ---------- */
+
+@import url(../fonts/fonts.css);
+
+/* ---------- Page ---------- */
+
 @import url(../blocks/page/page.css);
 
 /* ---------- Header ---------- */

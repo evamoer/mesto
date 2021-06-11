@@ -1,0 +1,60 @@
+.profile {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.profile__container {
+  width: 100%;
+  margin-top: 40px;
+  display: flex;
+}
+
+.profile__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+
+.profile__info {
+  max-width: 336px;
+  margin-left: 30px;
+  display: grid;
+  grid-template-columns: minmax(min-content, max-content) 24px;
+  grid-template-rows: minmax(min-content, max-content) minmax(min-content, max-content);
+  grid-column-gap: 16px;
+  grid-row-gap: 18px;
+}
+
+.profile__name {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 48px;
+}
+
+.profile__about {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.profile__edit-button {
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  padding: 0;
+  border: 1px solid #fff;
+  cursor: pointer;
+}
+
+.profile__add-button {
+  margin-left: auto;
+}
