@@ -1,4 +1,12 @@
 .page__container {
   max-width: 880px;
   margin: 0 auto;
+  display: grid;
+  grid-row-gap: 40px;
+}
+
+@media screen and (max-width: 700px) {
+  .page__container {
+    grid-row-gap: 42px;
+  }
 }

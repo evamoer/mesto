@@ -18,7 +18,7 @@
 
 @import url(../blocks/content/content.css);
 
-/* ---------- Profile ---------- */
+/* ---------- Profile Section---------- */
 
 @import url(../blocks/profile/profile.css);
 
@@ -37,3 +37,23 @@
 @import url(../blocks/profile/__add-button/profile__add-button.css);
 
 @import url(../blocks/profile/__add-button-image/profile__add-button-image.css);
+
+/* ---------- Gallery Section ---------- */
+
+@import url(../blocks/gallery/gallery.css);
+
+@import url(../blocks/gallery-table/gallery-table.css);
+
+@import url(../blocks/gallery-table/__item/gallery-table__item.css);
+
+@import url(../blocks/card/card.css);
+
+@import url(../blocks/card/__image/card__image.css);
+
+@import url(../blocks/card/__info/card__info.css);
+
+@import url(../blocks/card/__title/card__title.css);
+
+@import url(../blocks/card/__like-button/card__like-button.css);
+
+@import url(../blocks/card/__like-button-image/card__like-button-image.css);

@@ -1,0 +1,7 @@
+.card {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  display: grid;
+  grid-row-gap: 25px;
+}
