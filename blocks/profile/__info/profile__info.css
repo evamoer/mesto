@@ -1,6 +1,5 @@
 .profile__info {
   max-width: 336px;
-  margin-left: 30px;
   display: grid;
   grid-template-columns: minmax(min-content, max-content) minmax(min-content, max-content);
   grid-template-rows: minmax(min-content, max-content) minmax(min-content,max-content);
@@ -11,7 +10,7 @@
 
 @media screen and (max-width: 700px) {
   .profile__info {
-    margin-left: 0;
+    margin: 0 auto;
     margin-bottom: 36px;
   }
 }
