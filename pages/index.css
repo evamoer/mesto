@@ -57,3 +57,9 @@
 @import url(../blocks/card/__like-button/card__like-button.css);
 
 @import url(../blocks/card/__like-button-image/card__like-button-image.css);
+
+/* ---------- Footer ---------- */
+
+@import url(../blocks/footer/footer.css);
+
+@import url(../blocks/footer/__copyright/footer_copyright.css);
