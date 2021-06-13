@@ -17,14 +17,10 @@
         <img src="./images/profile__avatar.png" alt="Аватар профиля" class="profile__avatar">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button class="profile__edit-button">
-            <img src="./images/edit.svg" alt="Кнопка 'Редактировать'" class="profile__edit-button-image">
-          </button>
+          <button class="button button_type_edit"></button>
           <p class="profile__about">Исследователь океана</p>
         </div>
-        <button class="profile__add-button">
-          <img src="./images/add.svg" alt="Кнопка 'Добавить'" class="profile__add-button-image">
-        </button>
+        <button class="button button_type_add"></button>
       </section>
       <section class="gallery">
         <ul class="gallery-table">
@@ -33,9 +29,7 @@
               <img src="./images/karachevsk.png" alt="Карачаевск" class="card__image">
               <div class="card__info">
                 <h2 class="card__title">Карачаевск</h2>
-                <button class="card__like-button">
-                  <img src="./images/like.svg" alt="Кнопка 'Поставить лайк'" class="card__like-button-image">
-                </button>
+                <button class="button button_type_like"></button>
               </div>
             </article>
           </li>
@@ -44,9 +38,7 @@
               <img src="./images/elbrus.png" alt="Гора Эльбрус" class="card__image">
               <div class="card__info">
                 <h2 class="card__title">Гора Эльбрус</h2>
-                <button class="card__like-button">
-                  <img src="./images/like.svg" alt="Кнопка 'Поставить лайк'" class="card__like-button-image">
-                </button>
+                <button class="button button_type_like"></button>
               </div>
             </article>
           </li>
@@ -55,9 +47,7 @@
               <img src="./images/dombai.png" alt="Домбай" class="card__image">
               <div class="card__info">
                 <h2 class="card__title">Домбай</h2>
-                <button class="card__like-button">
-                  <img src="./images/like.svg" alt="Кнопка 'Поставить лайк'" class="card__like-button-image">
-                </button>
+                <button class="button button_type_like"></button>
               </div>
             </article>
           </li>
@@ -66,9 +56,7 @@
               <img src="./images/elbrus.png" alt="Гора Эльбрус" class="card__image">
               <div class="card__info">
                 <h2 class="card__title">Гора Эльбрус</h2>
-                <button class="card__like-button">
-                  <img src="./images/like.svg" alt="Кнопка 'Поставить лайк'" class="card__like-button-image">
-                </button>
+                <button class="button button_type_like"></button>
               </div>
             </article>
           </li>
@@ -77,9 +65,7 @@
               <img src="./images/dombai.png" alt="Домбай" class="card__image">
               <div class="card__info">
                 <h2 class="card__title">Домбай</h2>
-                <button class="card__like-button">
-                  <img src="./images/like.svg" alt="Кнопка 'Поставить лайк'" class="card__like-button-image">
-                </button>
+                <button class="button button_type_like"></button>
               </div>
             </article>
           </li>
@@ -88,9 +74,7 @@
               <img src="./images/karachevsk.png" alt="Карачаевск" class="card__image">
               <div class="card__info">
                 <h2 class="card__title">Карачаево-Черкесия</h2>
-                <button class="card__like-button">
-                  <img src="./images/like.svg" alt="Кнопка 'Поставить лайк'" class="card__like-button-image">
-                </button>
+                <button class="button button_type_like"></button>
               </div>
             </article>
           </li>
@@ -98,13 +82,14 @@
       </section>
       <section class="popup">
         <div class="popup__container">
-          <button class="popup__close-button"></button>
+          <button class="button button_type_close"></button>
           <div class="popup__content">
             <h2 class="popup__title">Редактировать профиль</h2>
             <input type="text" class="popup__input popup__input_type_profile-name" name="profile-name" value="Жак-Ив Кусто">
             <input type="text" class="popup__input popup__input_type_profile-about" name="profile-about" value="Исследователь океана">
-            <button class="popup__submit-button" type="submit">
-              <p class="popup__submit-button-text">Сохранить</p></button>
+            <button class="button button_type_submit" type="submit">
+              <p class="popup__submit-button-text">Сохранить</p>
+            </button>
           </div>
         </div>
       </section>

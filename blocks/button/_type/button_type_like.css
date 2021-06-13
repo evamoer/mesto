@@ -1,0 +1,10 @@
+.button_type_like {
+  width: 23px;
+  height: 19px;
+  margin-left: auto;
+  background: transparent center no-repeat url(../../../images/like.svg);
+}
+
+.button_type_like:active {
+  background-image: url(../../../images/like-active.svg);
+}

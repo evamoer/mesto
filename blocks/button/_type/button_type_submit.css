@@ -1,0 +1,11 @@
+.button_type_submit {
+  margin-bottom: 37px;
+  min-height: 50px;
+  width: 100%;
+  background-color: #000;
+  border-radius: 2px;
+}
+
+.button_type_submit:hover {
+  opacity: .8;
+}
