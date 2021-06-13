@@ -1,0 +1,9 @@
+.popup__input_type_profile-about {
+  margin-bottom: 40px;
+}
+
+@media screen and (max-width: 425px) {
+  .popup__input_type_profile-about {
+    margin-bottom: 45px;
+  }
+}
