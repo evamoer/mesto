@@ -74,8 +74,6 @@
 
 @import url(../blocks/popup/__container/popup__container.css);
 
-@import url(../blocks/popup/__content/popup__content.css);
-
 @import url(../blocks/popup/__title/popup__title.css);
 
 @import url(../blocks/popup/__input/popup__input.css);
@@ -88,4 +86,4 @@
 
 @import url(../blocks/footer/footer.css);
 
-@import url(../blocks/footer/__copyright/footer_copyright.css);
+@import url(../blocks/footer/__copyright/footer__copyright.css);
