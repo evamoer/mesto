@@ -36,7 +36,6 @@
 
 @import url(../blocks/button/_type/button_type_close.css);
 
-
 /* ---------- Profile Section---------- */
 
 @import url(../blocks/profile/profile.css);
@@ -84,8 +83,6 @@
 @import url(../blocks/popup/__input/_type/popup__input_type_profile-name.css);
 
 @import url(../blocks/popup/__input/_type/popup__input_type_profile-about.css);
-
-@import url(../blocks/popup/__submit-button-text/popup__submit-button-text.css);
 
 /* ---------- Footer ---------- */
 
