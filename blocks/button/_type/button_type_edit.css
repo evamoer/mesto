@@ -1,5 +1,6 @@
 .button_type_edit {
-  margin-bottom: 8px;
+  margin-bottom: 9px;
+  margin-left: 1px;
   width: 24px;
   height: 24px;
   border: 1px solid #fff;
@@ -8,6 +9,7 @@
 
 @media screen and (max-width: 425px) {
   .button_type_edit {
+    margin-left: 0;
     margin-right: 19px;
     margin-bottom: 6px;
     width: 18px;
