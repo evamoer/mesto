@@ -2,7 +2,7 @@
   width: 40px;
   height: 40px;
   background: transparent center url(../../../images/close.svg);
-  background-size: auto;
+  background-size: cover;
   position: absolute;
   top: -40px;
   right: -40px;

@@ -1,13 +1,5 @@
 .content {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(min-content, max-content);
-  justify-items: center;
   grid-row-gap: 50px;
-}
-
-@media screen and (max-width: 880px) {
-  .content {
-    grid-template-columns: 1fr;
-  }
 }
