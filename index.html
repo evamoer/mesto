@@ -16,10 +16,10 @@
         <img src="./images/profile__avatar.jpg" alt="Аватар профиля" class="profile__avatar">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button class="button button_type_edit" type="button"></button>
+          <button class="button button_type_edit" type="button" aria-label="Редактировать профиль"></button>
           <p class="profile__about">Исследователь океана</p>
         </div>
-        <button class="button button_type_add" type="button"></button>
+        <button class="button button_type_add" type="button" aria-label="Добавить место"></button>
       </section>
       <section class="gallery content__gallery">
         <ul class="gallery-table">
@@ -28,7 +28,7 @@
               <img src="./images/karachevsk.jpg" alt="Карачаевск" class="card__image">
               <div class="card__info">
                 <h2 class="card__title">Карачаевск</h2>
-                <button class="button button_type_like" type="button"></button>
+                <button class="button button_type_like" type="button" aria-label="Поставить лайк"></button>
               </div>
             </article>
           </li>
@@ -37,7 +37,7 @@
               <img src="./images/elbrus.jpg" alt="Гора Эльбрус" class="card__image">
               <div class="card__info">
                 <h2 class="card__title">Гора Эльбрус</h2>
-                <button class="button button_type_like" type="button"></button>
+                <button class="button button_type_like" type="button" aria-label="Поставить лайк"></button>
               </div>
             </article>
           </li>
@@ -46,7 +46,7 @@
               <img src="./images/dombai.jpg" alt="Домбай" class="card__image">
               <div class="card__info">
                 <h2 class="card__title">Домбай</h2>
-                <button class="button button_type_like" type="button"></button>
+                <button class="button button_type_like" type="button" aria-label="Поставить лайк"></button>
               </div>
             </article>
           </li>
@@ -55,7 +55,7 @@
               <img src="./images/elbrus.jpg" alt="Гора Эльбрус" class="card__image">
               <div class="card__info">
                 <h2 class="card__title">Гора Эльбрус</h2>
-                <button class="button button_type_like" type="button"></button>
+                <button class="button button_type_like" type="button" aria-label="Поставить лайк"></button>
               </div>
             </article>
           </li>
@@ -64,7 +64,7 @@
               <img src="./images/dombai.jpg" alt="Домбай" class="card__image">
               <div class="card__info">
                 <h2 class="card__title">Домбай</h2>
-                <button class="button button_type_like" type="button"></button>
+                <button class="button button_type_like" type="button" aria-label="Поставить лайк"></button>
               </div>
             </article>
           </li>
@@ -73,7 +73,7 @@
               <img src="./images/karachevsk.jpg" alt="Карачаевск" class="card__image">
               <div class="card__info">
                 <h2 class="card__title">Карачаево-Черкесия</h2>
-                <button class="button button_type_like" type="button"></button>
+                <button class="button button_type_like" type="button" aria-label="Поставить лайк"></button>
               </div>
             </article>
           </li>
@@ -81,12 +81,12 @@
       </section>
       <section class="popup">
         <div class="popup__container">
-          <button class="button button_type_close" type="button"></button>
+          <button class="button button_type_close" type="button"  aria-label="Закрыть всплывающее окно"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
-          <form class="popup__form" action="/" method="POST" id="popup__form" name="popup__form">
+          <form class="popup__form" action="/" method="POST" id="popup__form" name="popup__edit-profile-form">
             <input type="text" class="popup__input popup__input_type_profile-name" name="profile-name" value="Жак-Ив Кусто" placeholder="Имя пользователя" required>
             <input type="text" class="popup__input popup__input_type_profile-about" name="profile-about" value="Исследователь океана" placeholder="О себе" required>
-            <button class="button button_type_submit" type="submit">Сохранить</button>
+            <button class="button button_type_submit" type="submit"  aria-label="Сохранить изменения">Сохранить</button>
           </form>
         </div>
       </section>

@@ -1,3 +1,4 @@
+//объявляем переменные формы
 const popupOpenButtonElement = document.querySelector('.button_type_edit');
 const popupElement = document.querySelector('.popup');
 const popupCloseButtonElement = popupElement.querySelector('.button_type_close');
@@ -13,8 +14,8 @@ let profileAbout = profileInfo.querySelector('.profile__about');
 
 //функция для открытия попапа по клику
 const openPopup = function() {
-  profileName.textContent = nameInput.value;
-  profileAbout.textContent = jobInput.value;
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileAbout.textContent;
   popupElement.classList.add('popup_opened');
 }
 
