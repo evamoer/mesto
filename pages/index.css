@@ -66,6 +66,8 @@
 
 @import url(../blocks/card/card.css);
 
+@import url(../blocks/card/__image-container/card__image-container.css);
+
 @import url(../blocks/card/__image/card__image.css);
 
 @import url(../blocks/card/__info/card__info.css);
