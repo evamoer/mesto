@@ -71,14 +71,20 @@ function renderItem(item) {
   galleryItemImage.alt = item.name;
   galleryItemElementText.textContent = item.name;
   //слушатель клика по кнопке лайка и функция лайка-анлайка карточки
-  galleryItemElement.querySelector('.button_type_like').addEventListener('click', function(evt) {
+  const likeButtonElement = galleryItemElement.querySelector('.button_type_like');
+  likeButtonElement.addEventListener('click', function(evt) {
     evt.target.classList.toggle('button_type_like-active');
   })
+  //слушатель клика по кнопке корзины и функция удаления карточки
+  const deleteCardButton = galleryItemElement.querySelector('.button_type_delete-card');
+  deleteCardButton.addEventListener('click', function() {
+  const cardItem = deleteCardButton.closest('.gallery-table__item');
+  cardItem.remove();
+})
+
   //вывод карточки в галерею
   galleryListElement.append(galleryItemElement);
 };
-
-
 
 
 //функция для открытия по клику попапа для редактирования профиля
@@ -122,8 +128,14 @@ function addCardFormSubmitHandler (evt) {
     //слушатель клика по кнопке лайка и функция лайка-анлайка карточки
     galleryItemElement.querySelector('.button_type_like').addEventListener('click', function(evt) {
     evt.target.classList.toggle('button_type_like-active');
-  })
-  //вывод карточки в начало галереи
+    })
+    //слушатель клика по кнопке корзины и функция удаления карточки
+    const deleteCardButton = galleryItemElement.querySelector('.button_type_delete-card');
+    deleteCardButton.addEventListener('click', function() {
+    const cardItem = deleteCardButton.closest('.gallery-table__item');
+    cardItem.remove();
+    });
+    //вывод карточки в начало галереи
     galleryListElement.prepend(galleryItemElement);
     addCardClosePopup(); //попап закрывается при сохранении формы
 }
@@ -150,3 +162,10 @@ addCardPopupOpenButtonElement.addEventListener('click', openAddCardPopup);
 editProfileCloseButtonElement.addEventListener('click', editProfileClosePopup);
 //закрытие попапа добавления карточки по клику на крестик
 addCardCloseButtonElement.addEventListener('click', addCardClosePopup);
+
+const deleteCardButton = document.querySelector('.button_type_delete-card');
+deleteCardButton.addEventListener('click', function() {
+  const cardItem = deleteCardButton.closest('.gallery-table__item');
+  cardItem.remove();
+})
+
