@@ -87,10 +87,17 @@ const openAddCardPopup = function() {
 };
 
 
-//функция для закрытия попапа по клику
-const closePopup = function() {
+//функция для закрытия попапа редактирования профиля по клику на крестик
+const editProfileClosePopup = function() {
+  editProfilePopupElement.classList.remove('popup__container_opened');
   popupElement.classList.remove('popup_opened');
-}
+};
+
+//функция для закрытия попапа добавления карточки по клику на крестик
+const addCardClosePopup = function() {
+  addCardPopupElement.classList.remove('popup__container_opened');
+  popupElement.classList.remove('popup_opened');
+};
 
 // обработчик «отправки» формы
 function formSubmitHandler (evt) {
@@ -109,9 +116,9 @@ function formSubmitHandler (evt) {
 editProfilePopupOpenButtonElement.addEventListener('click', openEditProfilePopup);
 //открытие попапа для добавления карточки по клику
 addCardPopupOpenButtonElement.addEventListener('click', openAddCardPopup);
-//закрытие попапа(любого) по клику на крестик
-//editProfileCloseButtonElement.addEventListener('click', editProfileClosePopup);
-
-//addCardCloseButtonElement.addEventListener('click', addCardClosePopup);
+//закрытие попапа редактирования профиля по клику на крестик
+editProfileCloseButtonElement.addEventListener('click', editProfileClosePopup);
+//закрытие попапа добавления карточки по клику на крестик
+addCardCloseButtonElement.addEventListener('click', addCardClosePopup);
 //вызов функции для обработки массива с карточками
 renderItems(items);
