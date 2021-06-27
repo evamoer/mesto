@@ -1,17 +1,27 @@
-//объявляем переменные формы
-const popupOpenButtonElement = document.querySelector('.button_type_edit');
+//переменная для попап-секции
 const popupElement = document.querySelector('.popup');
-const popupCloseButtonElement = popupElement.querySelector('.button_type_close');
-// находим форму в DOM
-const formElement = document.querySelector('.popup__form');
-// находим поля формы в DOM
-const nameInput = formElement.querySelector('.popup__input_type_profile-name');
-const jobInput = formElement.querySelector('.popup__input_type_profile-about');
-// выбираем элементы из профиля, которые должны измениться
-const profileInfo = document.querySelector('.profile__info')
-const profileName = profileInfo.querySelector('.profile__name');
-const profileAbout = profileInfo.querySelector('.profile__about');
-// массив с карточками для галереи
+//переменная для попап-контейнера (общая)
+const popupContainer = popupElement.querySelector('.popup__container');
+//переменные для попап-контейнеров: редактирования профиля и добавления карточки
+const editProfilePopupElement = popupElement.querySelector('.popup__container_type_edit-profile');
+const addCardPopupElement = popupElement.querySelector('.popup__container_type_add-card');
+// переменные для кнопок вызова/закрытия попапов и сабмитов у каждого попапа
+const editProfilePopupOpenButtonElement = document.querySelector('.button_type_edit');
+const addCardPopupOpenButtonElement = document.querySelector('.button_type_add');
+const editProfileCloseButtonElement = editProfilePopupElement.querySelector('.button_type_close');
+const addCardCloseButtonElement = addCardPopupElement.querySelector('.button_type_close');
+const popupSubmitButtonElement = popupContainer.querySelector('.button_type_submit');
+// переменная формы попапа и инпутов каждого попапа
+const popupFormElement = popupElement.querySelector('.popup__form');
+const profileNamePopupFormInput = popupFormElement.querySelector('.popup__input_type_profile-name');
+const profileAboutPopupFormInput = popupFormElement.querySelector('.popup__input_type_profile-about');
+const cardTitlePopupFormInput = addCardPopupElement.querySelector('.popup__input_type_card-title');
+const cardLinkPopupFormInput  = addCardPopupElement.querySelector('.popup__input_type_card-link');
+// переменные элементов из секции профиля, которые должны измениться после редактирования
+const profileInfoElement = document.querySelector('.profile__info');
+const profileNameElement = profileInfoElement.querySelector('.profile__name');
+const profileAboutElement = profileInfoElement.querySelector('.profile__about');
+// массив с данными для карточек (названия и ссылки)
 const items = [
   {
     name: 'Архыз',
@@ -38,10 +48,18 @@ const items = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-
+//переменные для темплейта галереи и списка галереи
 const galleryTemplateContent = document.querySelector('.gallery-item-template').content;
 const galleryListElement = document.querySelector('.gallery-table');
 
+
+//функция для обработки массива с карточками
+function renderItems(items) {
+  items.forEach(renderItem);
+};
+
+
+//функция для создания и наполнения карточки
 function renderItem(item) {
   const galleryItemElement = galleryTemplateContent.cloneNode(true);
   const galleryItemElementText = galleryItemElement.querySelector('.card__title');
@@ -52,16 +70,22 @@ function renderItem(item) {
   galleryListElement.append(galleryItemElement);
 };
 
-function renderItems(items) {
-  items.forEach(renderItem);
+
+//функция для открытия по клику попапа для редактирования профиля
+const openEditProfilePopup = function() {
+  profileNamePopupFormInput.value = profileNameElement.textContent;
+  profileAboutPopupFormInput.value = profileAboutElement.textContent;
+  popupElement.classList.add('popup_opened');
+  editProfilePopupElement.classList.add('popup__container_opened');
 };
 
-//функция для открытия попапа по клику
-const openPopup = function() {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileAbout.textContent;
+
+//функция для открытия по клику попапа для добавления карточки
+const openAddCardPopup = function() {
   popupElement.classList.add('popup_opened');
-}
+  addCardPopupElement.classList.add('popup__container_opened');
+};
+
 
 //функция для закрытия попапа по клику
 const closePopup = function() {
@@ -77,11 +101,17 @@ function formSubmitHandler (evt) {
     closePopup(); //попап закрывается при сохранении формы
 }
 
-// прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler);
-//слушатели клика по кнопке для функций открытия-закрытия попапа
-popupOpenButtonElement.addEventListener('click', openPopup);
-popupCloseButtonElement.addEventListener('click', closePopup);
+//слушатель сабмита для редактирования профиля
+//editProfilePopupElement.addEventListener('submit', editProdileFormSubmitHandler);
+//слушатель сабмита для добавления карточки
+//addCardPopupElement.addEventListener('submit', addCardFormSubmitHandler);
+//открытие попапа редактирования профиля по клику
+editProfilePopupOpenButtonElement.addEventListener('click', openEditProfilePopup);
+//открытие попапа для добавления карточки по клику
+addCardPopupOpenButtonElement.addEventListener('click', openAddCardPopup);
+//закрытие попапа(любого) по клику на крестик
+//editProfileCloseButtonElement.addEventListener('click', editProfileClosePopup);
 
+//addCardCloseButtonElement.addEventListener('click', addCardClosePopup);
+//вызов функции для обработки массива с карточками
 renderItems(items);

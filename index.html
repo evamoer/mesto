@@ -39,13 +39,24 @@
         </ul>
       </section>
       <section class="popup">
-        <div class="popup__container">
-          <button class="button button_type_close" type="button"  aria-label="Закрыть всплывающее окно"></button>
+        <div class="popup__container popup__container_type_edit-profile">
+          <button class="button button_type_close" type="button" aria-label="Закрыть всплывающее окно"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
           <form class="popup__form" action="/" method="POST" id="popup__form" name="popup__edit-profile-form">
             <input type="text" class="popup__input popup__input_type_profile-name" name="profile-name" value="Жак-Ив Кусто" placeholder="Имя пользователя" required>
             <input type="text" class="popup__input popup__input_type_profile-about" name="profile-about" value="Исследователь океана" placeholder="О себе" required>
-            <button class="button button_type_submit" type="submit"  aria-label="Сохранить изменения">Сохранить</button>
+            <button class="button button_type_submit" type="submit" aria-label="Сохранить изменения">Сохранить</button>
+          </form>
+        </div>
+        <div class="popup__container popup__container_type_add-card">
+          <button class="button button_type_close" type="button" aria-label="Закрыть всплывающее окно"></button>
+          <h2 class="popup__title">Новое место</h2>
+          <form class="popup__form" action="/" method="POST" id="popup__form" name="popup__add-card-form">
+            <input type="text" class="popup__input popup__input_type_card-title" name="card-title" placeholder="Название"
+              required>
+            <input type="text" class="popup__input popup__input_type_card-link" name="card-link"
+              placeholder="Ссылка на картинку" required>
+            <button class="button button_type_submit" type="submit" aria-label="Сохранить изменения">Создать</button>
           </form>
         </div>
       </section>
