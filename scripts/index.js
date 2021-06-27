@@ -99,6 +99,20 @@ const addCardClosePopup = function() {
   popupElement.classList.remove('popup_opened');
 };
 
+//функция добавления новой карточки
+function addCardFormSubmitHandler (evt) {
+    evt.preventDefault(); // эта строчка отменяет стандартную отправку формы, так мы можем определить свою логику отправки
+    //создаем новый темплейт, заполняем его данными, полученными из формы
+    const galleryItemElement = galleryTemplateContent.cloneNode(true);
+    let galleryItemElementText = galleryItemElement.querySelector('.card__title');
+    let galleryItemImage = galleryItemElement.querySelector('.card__image');
+    galleryItemElementText.textContent = cardTitlePopupFormInput.value;
+    galleryItemImage.src = cardLinkPopupFormInput.value;
+    galleryItemImage.alt = cardTitlePopupFormInput.value;
+    galleryListElement.prepend(galleryItemElement);
+    addCardClosePopup(); //попап закрывается при сохранении формы
+}
+
 // обработчик «отправки» формы
 function formSubmitHandler (evt) {
     evt.preventDefault(); // эта строчка отменяет стандартную отправку формы, так мы можем определить свою логику отправки
@@ -111,7 +125,7 @@ function formSubmitHandler (evt) {
 //слушатель сабмита для редактирования профиля
 //editProfilePopupElement.addEventListener('submit', editProdileFormSubmitHandler);
 //слушатель сабмита для добавления карточки
-//addCardPopupElement.addEventListener('submit', addCardFormSubmitHandler);
+addCardPopupElement.addEventListener('submit', addCardFormSubmitHandler);
 //открытие попапа редактирования профиля по клику
 editProfilePopupOpenButtonElement.addEventListener('click', openEditProfilePopup);
 //открытие попапа для добавления карточки по клику
