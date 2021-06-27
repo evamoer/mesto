@@ -21,6 +21,7 @@ const cardLinkPopupFormInput  = addCardPopupElement.querySelector('.popup__input
 const profileInfoElement = document.querySelector('.profile__info');
 const profileNameElement = profileInfoElement.querySelector('.profile__name');
 const profileAboutElement = profileInfoElement.querySelector('.profile__about');
+
 // массив с данными для карточек (названия и ссылки)
 const items = [
   {
@@ -52,6 +53,12 @@ const items = [
 const galleryTemplateContent = document.querySelector('.gallery-item-template').content;
 const galleryListElement = document.querySelector('.gallery-table');
 
+
+const likeCard = function () {
+  const cardLikeButtonElement = document.querySelector('.button_type_like');
+  cardLikeButtonElement.classList.remove('button_type_like');
+  cardLikeButtonElement.classList.add('button_type_like-active');
+}
 
 //функция для обработки массива с карточками
 function renderItems(items) {
@@ -122,6 +129,9 @@ function formSubmitHandler (evt) {
     closePopup(); //попап закрывается при сохранении формы
 }
 
+//вызов функции для обработки массива с карточками
+renderItems(items);
+
 //слушатель сабмита для редактирования профиля
 //editProfilePopupElement.addEventListener('submit', editProdileFormSubmitHandler);
 //слушатель сабмита для добавления карточки
@@ -134,5 +144,10 @@ addCardPopupOpenButtonElement.addEventListener('click', openAddCardPopup);
 editProfileCloseButtonElement.addEventListener('click', editProfileClosePopup);
 //закрытие попапа добавления карточки по клику на крестик
 addCardCloseButtonElement.addEventListener('click', addCardClosePopup);
-//вызов функции для обработки массива с карточками
-renderItems(items);
+
+//переменная для кнопки лайка в карточке
+
+cardLikeButtonElement.addEventListener('click', likeCard);
+
+
+
