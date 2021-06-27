@@ -150,5 +150,3 @@ addCardPopupOpenButtonElement.addEventListener('click', openAddCardPopup);
 editProfileCloseButtonElement.addEventListener('click', editProfileClosePopup);
 //закрытие попапа добавления карточки по клику на крестик
 addCardCloseButtonElement.addEventListener('click', addCardClosePopup);
-
-
