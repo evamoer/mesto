@@ -22,6 +22,7 @@ const profileInfoElement = document.querySelector('.profile__info');
 const profileNameElement = profileInfoElement.querySelector('.profile__name');
 const profileAboutElement = profileInfoElement.querySelector('.profile__about');
 
+
 // массив с данными для карточек (названия и ссылки)
 const items = [
   {
@@ -53,20 +54,15 @@ const items = [
 const galleryTemplateContent = document.querySelector('.gallery-item-template').content;
 const galleryListElement = document.querySelector('.gallery-table');
 
-
-const likeCard = function () {
-  const cardLikeButtonElement = document.querySelector('.button_type_like');
-  cardLikeButtonElement.classList.remove('button_type_like');
-  cardLikeButtonElement.classList.add('button_type_like-active');
-}
+//вызов функции для обработки и вывода массива с карточками
+renderItems(items);
 
 //функция для обработки массива с карточками
 function renderItems(items) {
   items.forEach(renderItem);
 };
 
-
-//функция для создания и наполнения карточки
+//функция для создания и наполнения одной карточки
 function renderItem(item) {
   const galleryItemElement = galleryTemplateContent.cloneNode(true);
   const galleryItemElementText = galleryItemElement.querySelector('.card__title');
@@ -74,8 +70,15 @@ function renderItem(item) {
   galleryItemImage.src = item.link;
   galleryItemImage.alt = item.name;
   galleryItemElementText.textContent = item.name;
+  //слушатель клика по кнопке лайка и функция лайка-анлайка карточки
+  galleryItemElement.querySelector('.button_type_like').addEventListener('click', function(evt) {
+    evt.target.classList.toggle('button_type_like-active');
+  })
+  //вывод карточки в галерею
   galleryListElement.append(galleryItemElement);
 };
+
+
 
 
 //функция для открытия по клику попапа для редактирования профиля
@@ -116,24 +119,27 @@ function addCardFormSubmitHandler (evt) {
     galleryItemElementText.textContent = cardTitlePopupFormInput.value;
     galleryItemImage.src = cardLinkPopupFormInput.value;
     galleryItemImage.alt = cardTitlePopupFormInput.value;
+    //слушатель клика по кнопке лайка и функция лайка-анлайка карточки
+    galleryItemElement.querySelector('.button_type_like').addEventListener('click', function(evt) {
+    evt.target.classList.toggle('button_type_like-active');
+  })
+  //вывод карточки в начало галереи
     galleryListElement.prepend(galleryItemElement);
     addCardClosePopup(); //попап закрывается при сохранении формы
 }
 
-// обработчик «отправки» формы
-function formSubmitHandler (evt) {
+//функция сохранения изменений в профиле
+function editProdileFormSubmitHandler (evt) {
     evt.preventDefault(); // эта строчка отменяет стандартную отправку формы, так мы можем определить свою логику отправки
     // вставляем новые значения из формы в элементы профиля с помощью textContent
-    profileName.textContent = nameInput.value;
-    profileAbout.textContent = jobInput.value;
-    closePopup(); //попап закрывается при сохранении формы
+    profileNameElement.textContent = profileNamePopupFormInput.value;
+    profileAboutElement.textContent = profileAboutPopupFormInput.value;
+    editProfileClosePopup(); //попап закрывается при сохранении формы
 }
 
-//вызов функции для обработки массива с карточками
-renderItems(items);
 
 //слушатель сабмита для редактирования профиля
-//editProfilePopupElement.addEventListener('submit', editProdileFormSubmitHandler);
+editProfilePopupElement.addEventListener('submit', editProdileFormSubmitHandler);
 //слушатель сабмита для добавления карточки
 addCardPopupElement.addEventListener('submit', addCardFormSubmitHandler);
 //открытие попапа редактирования профиля по клику
@@ -144,10 +150,5 @@ addCardPopupOpenButtonElement.addEventListener('click', openAddCardPopup);
 editProfileCloseButtonElement.addEventListener('click', editProfileClosePopup);
 //закрытие попапа добавления карточки по клику на крестик
 addCardCloseButtonElement.addEventListener('click', addCardClosePopup);
-
-//переменная для кнопки лайка в карточке
-
-cardLikeButtonElement.addEventListener('click', likeCard);
-
 
 

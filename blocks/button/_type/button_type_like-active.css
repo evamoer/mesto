@@ -1,6 +1,6 @@
-.button_type_like {
+.button_type_like-active {
   min-width: 22px;
   height: auto;
   margin-left: auto;
-  background: transparent center no-repeat url(../../../images/like-active.svg));
+  background: transparent center no-repeat url(../../../images/like-active.svg);
 }
