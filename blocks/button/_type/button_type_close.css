@@ -4,6 +4,7 @@
   background: transparent center url(../../../images/close.svg);
   background-size: cover;
   position: absolute;
+  z-index: 1;
   top: -48px;
   right: -48px;
 }

@@ -5,6 +5,7 @@ const popupContainer = popupElement.querySelector('.popup__container');
 //переменные для попап-контейнеров: редактирования профиля и добавления карточки
 const editProfilePopupElement = popupElement.querySelector('.popup__container_type_edit-profile');
 const addCardPopupElement = popupElement.querySelector('.popup__container_type_add-card');
+const openCardImagePopupElement = popupElement.querySelector('.popup__container_type_open-card-image');
 // переменные для кнопок вызова/закрытия попапов и сабмитов у каждого попапа
 const editProfilePopupOpenButtonElement = document.querySelector('.button_type_edit');
 const addCardPopupOpenButtonElement = document.querySelector('.button_type_add');
@@ -74,14 +75,31 @@ function renderItem(item) {
   const likeButtonElement = galleryItemElement.querySelector('.button_type_like');
   likeButtonElement.addEventListener('click', function(evt) {
     evt.target.classList.toggle('button_type_like-active');
-  })
+  });
   //слушатель клика по кнопке корзины и функция удаления карточки
   const deleteCardButton = galleryItemElement.querySelector('.button_type_delete-card');
   deleteCardButton.addEventListener('click', function() {
   const cardItem = deleteCardButton.closest('.gallery-table__item');
   cardItem.remove();
-})
-
+});
+  const cardImageContainerElement = galleryItemElement.querySelector('.card__image-container');
+  //слушатель открытия полного изображения по клику на карточку
+  cardImageContainerElement.addEventListener('click', function () {
+    const openCardImagePopupElement =  popupElement.querySelector('.popup__container_type_open-card-image');
+    const openedCardImage = openCardImagePopupElement.querySelector('.popup__opened-card-image');
+    const openedCardImageCaption = openCardImagePopupElement.querySelector('.popup__image-caption');
+    const closeOpenedCardImageButton = openCardImagePopupElement.querySelector('.button_type_close');
+    openedCardImage.src = galleryItemImage.src;
+    openedCardImage.alt = galleryItemImage.alt;
+    openedCardImageCaption.textContent = galleryItemImage.alt;
+    popupElement.classList.add('popup_opened');
+    openCardImagePopupElement.classList.add('popup__container_opened');
+    //слушатель закрытия попапа с полным изображением
+    closeOpenedCardImageButton.addEventListener('click', function() {
+      popupElement.classList.remove('popup_opened');
+      openCardImagePopupElement.classList.remove('popup__container_opened');
+    });
+  })
   //вывод карточки в галерею
   galleryListElement.append(galleryItemElement);
 };
@@ -128,13 +146,32 @@ function addCardFormSubmitHandler (evt) {
     //слушатель клика по кнопке лайка и функция лайка-анлайка карточки
     galleryItemElement.querySelector('.button_type_like').addEventListener('click', function(evt) {
     evt.target.classList.toggle('button_type_like-active');
-    })
+    });
     //слушатель клика по кнопке корзины и функция удаления карточки
     const deleteCardButton = galleryItemElement.querySelector('.button_type_delete-card');
     deleteCardButton.addEventListener('click', function() {
     const cardItem = deleteCardButton.closest('.gallery-table__item');
     cardItem.remove();
     });
+    const cardImageContainerElement = galleryItemElement.querySelector('.card__image-container');
+    //слушатель открытия полного изображения по клику на карточку
+    cardImageContainerElement.addEventListener('click', function () {
+    const openCardImagePopupElement =  popupElement.querySelector('.popup__container_type_open-card-image');
+    const openedCardImage = openCardImagePopupElement.querySelector('.popup__opened-card-image');
+    const openedCardImageCaption = openCardImagePopupElement.querySelector('.popup__image-caption');
+    const closeOpenedCardImageButton = openCardImagePopupElement.querySelector('.button_type_close');
+    openedCardImage.src = galleryItemImage.src;
+    openedCardImage.alt = galleryItemImage.alt;
+    openedCardImageCaption.textContent = galleryItemImage.alt;
+    popupElement.classList.add('popup_opened');
+    openCardImagePopupElement.classList.add('popup__container_opened');
+    //слушатель закрытия попапа с полным изображением
+    closeOpenedCardImageButton.addEventListener('click', function() {
+      popupElement.classList.remove('popup_opened');
+      openCardImagePopupElement.classList.remove('popup__container_opened');
+    });
+  })
+
     //вывод карточки в начало галереи
     galleryListElement.prepend(galleryItemElement);
     addCardClosePopup(); //попап закрывается при сохранении формы
