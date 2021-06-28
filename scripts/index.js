@@ -89,6 +89,7 @@ function renderItem(item) {
     const openedCardImage = openCardImagePopupElement.querySelector('.popup__opened-card-image');
     const openedCardImageCaption = openCardImagePopupElement.querySelector('.popup__image-caption');
     const closeOpenedCardImageButton = openCardImagePopupElement.querySelector('.button_type_close');
+    popupElement.classList.add('popup_type_open-card-image');
     openedCardImage.src = galleryItemImage.src;
     openedCardImage.alt = galleryItemImage.alt;
     openedCardImageCaption.textContent = galleryItemImage.alt;
@@ -96,6 +97,7 @@ function renderItem(item) {
     openCardImagePopupElement.classList.add('popup__container_opened');
     //слушатель закрытия попапа с полным изображением
     closeOpenedCardImageButton.addEventListener('click', function() {
+      popupElement.classList.remove('popup_type_open-card-image');
       popupElement.classList.remove('popup_opened');
       openCardImagePopupElement.classList.remove('popup__container_opened');
     });
@@ -160,6 +162,7 @@ function addCardFormSubmitHandler (evt) {
     const openedCardImage = openCardImagePopupElement.querySelector('.popup__opened-card-image');
     const openedCardImageCaption = openCardImagePopupElement.querySelector('.popup__image-caption');
     const closeOpenedCardImageButton = openCardImagePopupElement.querySelector('.button_type_close');
+    popupElement.classList.add('popup_type_open-card-image');
     openedCardImage.src = galleryItemImage.src;
     openedCardImage.alt = galleryItemImage.alt;
     openedCardImageCaption.textContent = galleryItemImage.alt;
@@ -167,13 +170,15 @@ function addCardFormSubmitHandler (evt) {
     openCardImagePopupElement.classList.add('popup__container_opened');
     //слушатель закрытия попапа с полным изображением
     closeOpenedCardImageButton.addEventListener('click', function() {
+      popupElement.classList.remove('popup_type_open-card-image');
       popupElement.classList.remove('popup_opened');
       openCardImagePopupElement.classList.remove('popup__container_opened');
     });
   })
-
     //вывод карточки в начало галереи
     galleryListElement.prepend(galleryItemElement);
+    cardTitlePopupFormInput.value = '';
+    cardLinkPopupFormInput.value = '';
     addCardClosePopup(); //попап закрывается при сохранении формы
 }
 
