@@ -1,4 +1,9 @@
-.popup__container_type_open-card-image {
+.popup__container_type_full-image {
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s linear;
+  
   width: auto;
   max-width: 75vw;
   max-height: 75vh;
@@ -6,14 +11,13 @@
   margin: 0;
   box-sizing: border-box;
   position: relative;
-  display: none;
   align-items: flex-start;
   background-color: transparent;
   box-shadow: none;
 }
 
 @media screen and (max-width: 550px) {
-  .popup__container_type_open-card-image {
+  .popup__container_type_full-image {
     margin: 0;
     padding: 0;
   }
