@@ -82,13 +82,15 @@
 
 @import url(../blocks/popup/popup.css);
 
+@import url(../blocks/popup/_type/popup_type_add-card.css);
+
+@import url(../blocks/popup/_type/popup_type_edit-profile.css);
+
 @import url(../blocks/popup/_type/popup_type_full-image.css);
 
 @import url(../blocks/popup/_opened/popup_opened.css);
 
 @import url(../blocks/popup/_closed/popup_closed.css);
-
-@import url(../blocks/popup/__form/popup__form.css);
 
 @import url(../blocks/popup/__container/popup__container.css);
 
@@ -100,17 +102,19 @@
 
 @import url(../blocks/popup/__container/_opened/popup__container_opened.css);
 
-@import url(../blocks/popup/__full-image/popup__full-image.css);
-
-@import url(../blocks/popup/__full-image-caption/popup__full-image-caption.css);
-
 @import url(../blocks/popup/__title/popup__title.css);
+
+@import url(../blocks/popup/__form/popup__form.css);
 
 @import url(../blocks/popup/__input/popup__input.css);
 
 @import url(../blocks/popup/__input/_type/popup__input_type_profile-name.css);
 
 @import url(../blocks/popup/__input/_type/popup__input_type_profile-about.css);
+
+@import url(../blocks/popup/__full-image/popup__full-image.css);
+
+@import url(../blocks/popup/__full-image-caption/popup__full-image-caption.css);
 
 /* ---------- Footer ---------- */
 
