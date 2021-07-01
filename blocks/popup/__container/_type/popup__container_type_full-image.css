@@ -1,9 +1,5 @@
 .popup__container_type_full-image {
   display: flex;
-  visibility: hidden;
-  opacity: 0;
-  transition: all 0.5s linear;
-  
   width: auto;
   max-width: 75vw;
   max-height: 75vh;
