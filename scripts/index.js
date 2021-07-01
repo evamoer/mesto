@@ -51,8 +51,7 @@ function openFullImage (evt) {
   fullImageElement.src = evt.target.src;
   fullImageElement.alt = evt.target.alt;
   fullImageCaption.textContent = evt.target.alt;
-  //отслеживаем клик по кнопке закрытия
-  closeFullImageButton.addEventListener('click', closeFullImage);
+
 }
 
 //функция удаления карточки
@@ -142,10 +141,10 @@ const renderNewPlace = function (newPlaceItem) {
 };
 
 //функция обработки формы добавления карточки (получаем название и ссылку)
-function getNewPlaceData(evt) {
-  const newPlaceTitle = evt.srcElement[0].value;
-  const newPlaceLink = evt.srcElement[1].value;
-  newPlace = {
+function getNewPlaceData() {
+  const newPlaceTitle = cardTitlePopupFormInput.value;
+  const newPlaceLink = cardLinkPopupFormInput.value;
+  const newPlace = {
     name: newPlaceTitle,
     link: newPlaceLink
   }
@@ -155,7 +154,7 @@ function getNewPlaceData(evt) {
 //функция добавления карточки в галереию по сабмиту
 function addCardPopupFormSubmitHandler (evt) {
   evt.preventDefault(); // эта строчка отменяет стандартную отправку формы, так мы можем определить свою логику отправки
-  const newPlaceData = getNewPlaceData(evt);
+  const newPlaceData = getNewPlaceData();
   const newPlaceItem = createCard(newPlaceData);
   renderNewPlace(newPlaceItem);
   closeAddCardPopup();
@@ -169,3 +168,4 @@ closeEditProfileButton.addEventListener('click', closeEditProfilePopup);
 addCardPopupForm.addEventListener('submit', addCardPopupFormSubmitHandler);
 openAddCardButton.addEventListener('click', openAddCardPopup);
 closeAddCardButton.addEventListener('click', closeAddCardPopup);
+closeFullImageButton.addEventListener('click', closeFullImage);
