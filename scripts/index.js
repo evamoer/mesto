@@ -51,7 +51,6 @@ function openFullImage (evt) {
   fullImageElement.src = evt.target.src;
   fullImageElement.alt = evt.target.alt;
   fullImageCaption.textContent = evt.target.alt;
-
 }
 
 //функция удаления карточки
