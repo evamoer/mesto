@@ -1,3 +1,4 @@
+//переменная-объект с начальными параметрами
 const settings = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -51,13 +52,13 @@ const getErrorMessage = (inputElement) => {
 //функция проверки инпута на валидность
 const checkInputValidity = (formElement, inputElement, settings) => {
   const inputElementValidityStatus = inputElement.validity.valid;
-  //если инпут не является валидным
+  //если инпут не является валидным, то вывести ошибку
   if (!inputElementValidityStatus) {
     const errorMessage = getErrorMessage(inputElement);
     inputElement.classList.add(settings.inputErrorClass);
     showInputError(formElement, inputElement, errorMessage, settings);
   }
-  // если инпут является валидным
+  // если инпут является валидным, то убрать ошибку
   else {
     inputElement.classList.remove(settings.inputErrorClass)
     hideInputError(formElement, inputElement, settings);
@@ -91,7 +92,7 @@ const toggleSubmitButtonState = (submitFormButton, inputList, settings) => {
 }
 
 //функция очищения формы от визуальной валидации (при закрытии попапа без сабмита)
-const cleanAfterCloseButtonClick = (formElement, inputList, settings) => {
+const cleanInputErrorsAfterClosing = (formElement, inputList, settings) => {
   if (hasInvalidInput(inputList)) {
     inputList.forEach(inputElement => {
       inputElement.classList.remove(settings.inputErrorClass);
@@ -100,10 +101,10 @@ const cleanAfterCloseButtonClick = (formElement, inputList, settings) => {
   };
 }
 
-//функция проверки клика на кнопку закрытия попапа
-const checkClickOnClosePopupButton = (closePopupButton, submitFormButton, inputList, formElement, settings) => {
+//функция установки обработчика при клике на кнопку закрытия попапа
+const setEventListenerOnClosePopupButton = (closePopupButton, submitFormButton, inputList, formElement, settings) => {
   closePopupButton.addEventListener('click', function () {
-    cleanAfterCloseButtonClick(formElement, inputList, settings);
+    cleanInputErrorsAfterClosing(formElement, inputList, settings);
   });
 };
 
@@ -128,7 +129,7 @@ const setEventListeners = (formElement, settings) => {
   });
 
   //проверяем, был ли закрыт попап
-  checkClickOnClosePopupButton(closePopupButton, submitFormButton, inputList, formElement, settings);
+  setEventListenerOnClosePopupButton(closePopupButton, submitFormButton, inputList, formElement, settings);
   //устанавливаем на каждый инпут обработчик
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', (evt) => {
