@@ -16,10 +16,10 @@
         <img src="./images/profile__avatar.jpg" alt="Аватар профиля" class="profile__avatar">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button class="button button_type_edit" type="button" aria-label="Редактировать профиль"></button>
+          <button class="button button_type_edit button_type_open" type="button" aria-label="Редактировать профиль"></button>
           <p class="profile__about">Исследователь океана</p>
         </div>
-        <button class="button button_type_add" type="button" aria-label="Добавить место"></button>
+        <button class="button button_type_add button_type_open" type="button" aria-label="Добавить место"></button>
       </section>
       <section class="gallery content__gallery">
         <ul class="gallery-table">
@@ -39,32 +39,47 @@
           </template>
         </ul>
       </section>
+      <!-- Попап редактирования профиля -->
       <div class="popup popup_type_edit-profile">
           <div class="popup__container">
             <button class="button button_type_close" type="button" aria-label="Закрыть всплывающее окно"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form class="popup__form" action="/" method="POST" id="popup__edit-profile-form" name="popup__edit-profile-form">
-              <input type="text" class="popup__input popup__input_type_profile-name" name="profile-name" value="Жак-Ив Кусто"
-                placeholder="Имя пользователя" required>
-              <input type="text" class="popup__input popup__input_type_profile-about" name="profile-about"
-                value="Исследователь океана" placeholder="О себе" required>
-              <button class="button button_type_submit" type="submit" aria-label="Сохранить изменения">Сохранить</button>
+            <form class="popup__form" action="/" method="POST" id="popup__edit-profile-form" name="popup__edit-profile-form" novalidate>
+              <div  class="popup__input-field">
+                <input type="text" class="popup__input popup__input_type_profile-name" id="profile-name" name="profile-name" value="Жак-Ив Кусто"
+                placeholder="Имя пользователя" required minlength="2" maxlength = "40">
+                <span class="popup__error" id="profile-name-input-error"></span>
+              </div>
+              <div  class="popup__input-field">
+                <input type="text" class="popup__input popup__input_type_profile-about" id="profile-about" name="profile-about"
+                value="Исследователь океана" placeholder="О себе" required minlength="2" maxlength = "200">
+                <span class="popup__error" id="profile-about-input-error"></span>
+              </div>
+              <button class="button button_type_submit popup__button" type="submit" aria-label="Сохранить изменения">Сохранить</button>
             </form>
           </div>
         </div>
+      <!-- Попап добавления карточки -->
       <div class="popup popup_type_add-card">
         <div class="popup__container">
           <button class="button button_type_close" type="button" aria-label="Закрыть всплывающее окно"></button>
           <h2 class="popup__title">Новое место</h2>
-          <form class="popup__form" action="/" method="POST" id="popup__add-card-form" name="popup__add-card-form">
-            <input type="text" class="popup__input popup__input_type_card-title" name="card-title" placeholder="Название"
-              required>
-            <input type="text" class="popup__input popup__input_type_card-link" name="card-link"
+          <form class="popup__form" action="/" method="POST" id="popup__add-card-form" name="popup__add-card-form" novalidate>
+            <div  class="popup__input-field">
+              <input type="text" class="popup__input popup__input_type_card-title" name="card-title" id="card-title" placeholder="Название"
+              required minlength="2" maxlength = "30">
+              <span class="popup__error" id="card-title-input-error"></span>
+            </div>
+            <div  class="popup__input-field">
+              <input type="url" class="popup__input popup__input_type_card-link" name="card-link" id="card-link"
               placeholder="Ссылка на картинку" required>
-            <button class="button button_type_submit" type="submit" aria-label="Сохранить изменения">Создать</button>
+              <span class="popup__error" id="card-link-input-error"></span>
+            </div>
+            <button class="button button_type_submit popup__button" type="submit" aria-label="Сохранить изменения">Создать</button>
           </form>
         </div>
       </div>
+      <!-- Попап с полным изобрвжением -->
       <div class="popup popup_type_full-image">
         <figure class="popup__container popup__container_type_full-image">
           <button class="button button_type_close" type="button" aria-label="Закрыть всплывающее окно"></button>
@@ -78,6 +93,7 @@
     </footer>
   </div>
   <script src="./scripts/initial-cards.js"></script>
+  <script src="scripts/validate.js"></script>
   <script src="./scripts/index.js"></script>
 </body>
 </html>

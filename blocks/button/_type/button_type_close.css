@@ -1,12 +1,12 @@
 .button_type_close {
-  width: 56px;
-  height: 56px;
+  width: 58px;
+  height: 58px;
   background: transparent center url(../../../images/close.svg);
   background-size: cover;
   position: absolute;
   z-index: 1;
-  top: -48px;
-  right: -48px;
+  top: -53px;
+  right: -53px;
 }
 
 @media screen and (max-width: 550px) {
