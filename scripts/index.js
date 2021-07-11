@@ -171,7 +171,8 @@ const closePopupWithClickOnOverlay = (event) => {
   if (event.target !== event.currentTarget) {
     return
   }  else  {
-    closePopup(event.target);
+    closePopup(event.currentTarget);
+    event.currentTarget.removeEventListener('mousedown', closePopupWithClickOnOverlay);
   }
 };
 
