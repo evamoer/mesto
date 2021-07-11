@@ -81,14 +81,12 @@ const toggleSubmitButtonState = (submitFormButton, inputList, settings) => {
     //кнопка сабмита становится неактивной
     submitFormButton.setAttribute('disabled', true);
     submitFormButton.classList.add(settings.inactiveButtonClass);
-    console.log('кнопка неактивна 1')
   }
   //если невалидные инпуты в форме отсутствуют
   else {
     //кнопка сабмита становится активной
     submitFormButton.removeAttribute('disabled', false);
     submitFormButton.classList.remove(settings.inactiveButtonClass);
-    console.log('кнопка активна 2')
   }
 }
 
@@ -138,7 +136,6 @@ const setEventListeners = (formElement, settings) => {
       checkInputValidity(formElement, inputElement, settings);
       //изменяем состояние кнопки сабмита в зав-ти от валидности инпутов
       toggleSubmitButtonState(submitFormButton, inputList, settings);
-      console.log('кнопка 3')
     })
   })
   //изменяем состояние кнопки сабмита в зав-ти от валидности инпутов

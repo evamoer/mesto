@@ -46,18 +46,6 @@ function closeFullImage () {
   closePopup(fullImagePopupElement);
 };
 
-//функция закрытия  попапа по клику на клавишу Ecsape
-const closePopupWithEscButton = (evt)  => {
-  popupList.forEach(popupElement => {
-    if (evt.key === 'Escape') {
-      if (popupElement.classList.contains('popup_opened')) {
-        closePopup(popupElement);
-        document.removeEventListener('keydown', closePopupWithEscButton);
-      };
-    };
-  });
-}
-
 //функция открытия полного изображения
 function openFullImage (evt) {
   openPopup(fullImagePopupElement);
@@ -187,10 +175,22 @@ const closePopupWithClickOnOverlay = (event) => {
   }
 };
 
+//функция закрытия  попапа по клику на клавишу Ecsape
+const closePopupWithEscButton = (evt)  => {
+  popupList.forEach(popupElement => {
+    if (evt.key === 'Escape') {
+      if (popupElement.classList.contains('popup_opened')) {
+        closePopup(popupElement);
+        document.removeEventListener('keydown', closePopupWithEscButton);
+      };
+    };
+  });
+}
+
 //функция проверки клика по оверлэю для каждого попапа
 const setClickOnOverlayEventListeners = (popupList) => {
   popupList.forEach(popupElement => {
-    popupElement.addEventListener('mousedown', closePopupWithClickOnOverlay);
+      popupElement.addEventListener('mousedown', closePopupWithClickOnOverlay);
   });
 };
 //вызов  этой функции
