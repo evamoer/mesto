@@ -31,34 +31,28 @@ const hideInputError = (formElement, inputElement, settings) => {
 
 //функция получения текста ошибки при невалидности инпута
 const getErrorMessage = (inputElement) => {
-  //если инпут не валидный
   if (!inputElement.validity.valid) {
-    //если поле инпута пустое
-    if (inputElement.validity.valueMissing) {
-      return 'Вы пропустили это поле.'
-    }
-    //если вводят не ссылку (проверка на type=url)
-    else if (inputElement.validity.typeMismatch) {
-      return 'Введите адрес сайта.'
-    }
-    //в остальных случаях выводим дефолтный текст ошибки
-    else {
       return inputElement.validationMessage;
     }
-  }
 };
 
 
 //функция проверки инпута на валидность
-const checkInputValidity = (formElement, inputElement, settings) => {
-  const inputElementValidityStatus = inputElement.validity.valid;
-  //если инпут не является валидным, то вывести ошибку
+const checkInputValidity = (inputElement) => {
+  return inputElement.validity.valid;
+}
+
+
+//функция переключения визуальной валидации инпута
+const toggleInputState = (formElement, inputElement, settings) => {
+  const inputElementValidityStatus = checkInputValidity(inputElement);
+  //если инпут не является валидным, то вывести ошибку и подсветить его красным
   if (!inputElementValidityStatus) {
     const errorMessage = getErrorMessage(inputElement);
     inputElement.classList.add(settings.inputErrorClass);
     showInputError(formElement, inputElement, errorMessage, settings);
   }
-  // если инпут является валидным, то убрать ошибку
+  // если инпут является валидным, то убрать ошибку и убрать красную подсветку
   else {
     inputElement.classList.remove(settings.inputErrorClass)
     hideInputError(formElement, inputElement, settings);
@@ -134,7 +128,7 @@ const setEventListeners = (formElement, settings) => {
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', (evt) => {
       //проверяем валидность у каждого инпута
-      checkInputValidity(formElement, inputElement, settings);
+      toggleInputState(formElement, inputElement, settings);
       //изменяем состояние кнопки сабмита в зав-ти от валидности инпутов
       toggleSubmitButtonState(submitFormButton, inputList, settings);
     })
