@@ -1,5 +1,4 @@
-// массив с данными для карточек (названия и ссылки)
-const items = [
+export const items = [
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
