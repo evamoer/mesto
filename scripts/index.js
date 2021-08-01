@@ -24,14 +24,15 @@ const fullImagePopupContainer = fullImagePopupElement.querySelector('.popup__con
 const fullImageElement = fullImagePopupContainer.querySelector('.popup__full-image');
 const fullImageCaption = fullImagePopupContainer.querySelector('.popup__full-image-caption');
 const closeFullImageButton = fullImagePopupContainer.querySelector('.button_type_close');
+const escapeKey = 'Escape';
+const editProfileFormValidator = new FormValidator(settings, editProfilePopupForm);
+const addCardFormValidator = new FormValidator(settings, addCardPopupForm);
 
-function enableValidation (formElement) {
-  const formValidator = new FormValidator (settings, formElement);
-  formValidator.enableValidation();
-};
+editProfileFormValidator.enableValidation();
+addCardFormValidator.enableValidation();
 
 function renderCard (item) {
-    const card = new Card(item.name, item.link, '.gallery-item-template');
+    const card = new Card(item.name, item.link, '.gallery-item-template', '.gallery-table__item', openFullImage);
     const cardElement = card.generateCard();
     return cardElement;
 };
@@ -42,28 +43,25 @@ items.forEach((item) => {
 
 function openPopup (popupElement) {
     popupElement.classList.add('popup_opened');
-    document.addEventListener('keydown', closePopupWithEscButton);
+    document.addEventListener('keydown', closePopupWithEscKey);
     popupElement.addEventListener('mousedown', closePopupWithClickOnOverlay);
 };
 
 function closePopup (popupElement) {
     popupElement.classList.remove('popup_opened');
-    document.removeEventListener('keydown', closePopupWithEscButton);
+    document.removeEventListener('keydown', closePopupWithEscKey);
+    popupElement.removeEventListener('mousedown', closePopupWithClickOnOverlay);
 };
 
-function closePopupWithEscButton (evt) {
+function closePopupWithEscKey (evt) {
   const activePopupElement = document.querySelector('.popup_opened');
-    if ((evt.key === 'Escape') && (activePopupElement.classList.contains('popup_type_add-card'))) {
-      closeAddCardPopup ();
-    } else if (evt.key === 'Escape') {
+    if (evt.key === escapeKey) {
       closePopup(activePopupElement);
-      };
+    };
 };
 
 function closePopupWithClickOnOverlay (evt) {
-  if ((evt.target === evt.currentTarget) && (evt.currentTarget.classList.contains('popup_type_add-card'))) {
-    closeAddCardPopup ();
-  } else if (evt.target === evt.currentTarget) {
+  if (evt.target === evt.currentTarget) {
     closePopup(evt.currentTarget);
   };
 };
@@ -72,7 +70,8 @@ function openEditProfilePopup () {
   profileNamePopupFormInput.value = profileNameElement.textContent;
   profileAboutPopupFormInput.value = profileAboutElement.textContent;
   openPopup(editProfilePopupElement);
-  enableValidation (editProfilePopupForm);
+  editProfileFormValidator.cleanInputError();
+  editProfileFormValidator.toggleSubmitButtonState();
 };
 
 function editProfileFormSubmitHandler (evt) {
@@ -84,7 +83,9 @@ function editProfileFormSubmitHandler (evt) {
 
 function openAddCardPopup () {
   openPopup(addCardPopupElement);
-  enableValidation (addCardPopupForm);
+  addCardPopupForm.reset();
+  addCardFormValidator.cleanInputError();
+  addCardFormValidator.toggleSubmitButtonState();
 };
 
 function addNewCard (newPlaceItem) {
@@ -98,17 +99,11 @@ function addCardPopupFormSubmitHandler (evt) {
     link: cardLinkPopupFormInput.value
   };
   addNewCard(renderCard(newCardData));
-  closeAddCardPopup();
-  addCardPopupForm.reset();
-};
-
-function closeAddCardPopup () {
   closePopup(addCardPopupElement);
-  addCardPopupForm.reset();
 };
 
 function closeFullImage () {
-    closePopup(fullImagePopupElement);
+  closePopup(fullImagePopupElement);
 };
 
 function openFullImage (evt) {
@@ -123,7 +118,5 @@ openEditProfileButton.addEventListener('click', openEditProfilePopup);
 closeEditProfileButton.addEventListener('click', () => closePopup(editProfilePopupElement));
 addCardPopupForm.addEventListener('submit', addCardPopupFormSubmitHandler);
 openAddCardButton.addEventListener('click', openAddCardPopup);
-closeAddCardButton.addEventListener('click', closeAddCardPopup);
+closeAddCardButton.addEventListener('click', () => closePopup(addCardPopupElement));
 closeFullImageButton.addEventListener('click', closeFullImage);
-
-export {openFullImage};
