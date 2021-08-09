@@ -1,7 +1,6 @@
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-import {items} from './initial-items.js';
-import {settings} from './validation-settings.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import {items, settings} from '../utils/constants.js';
 
 const galleryListElement = document.querySelector('.gallery-table');
 const profileInfoElement = document.querySelector('.profile__info');
