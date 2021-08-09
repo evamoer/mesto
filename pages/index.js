@@ -1,5 +1,6 @@
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
 import {items, settings} from '../utils/constants.js';
 
 const galleryListElement = document.querySelector('.gallery-table');
@@ -36,9 +37,9 @@ function renderCard (item) {
     return cardElement;
 };
 
-items.forEach((item) => {
-    galleryListElement.append(renderCard (item));
-});
+const gallerySection = new Section({items: items, renderer: renderCard}, '.gallery-table');
+gallerySection.renderItems();
+
 
 function openPopup (popupElement) {
     popupElement.classList.add('popup_opened');
