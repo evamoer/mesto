@@ -11,6 +11,8 @@ const profileAboutElement = profileInfoElement.querySelector('.profile__about');
 const openEditProfileButton = document.querySelector('.button_type_edit');
 const openAddCardButton = document.querySelector('.button_type_add');
 const editProfilePopupForm = document.getElementById('popup__edit-profile-form');
+const profileNamePopupFormInput = editProfilePopupForm.elements["profile-name"];
+const profileAboutPopupFormInput = editProfilePopupForm.elements["profile-about"];
 const addCardPopupForm = document.getElementById('popup__add-card-form');
 const cardTitlePopupFormInput = addCardPopupForm.elements["card-title"];
 const cardLinkPopupFormInput = addCardPopupForm.elements["card-link"];
@@ -24,6 +26,7 @@ function renderCard (item) {
 };
 
 const gallerySection = new Section({items: items, renderer: renderCard}, '.gallery-table');
+
 gallerySection.renderItems();
 
 const editProfilePopupElement = new PopupWithForm ({
@@ -59,10 +62,20 @@ editProfileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 
 openEditProfileButton.addEventListener('click', () => {
+  profileNamePopupFormInput.value = profileNameElement.textContent;
+  profileAboutPopupFormInput.value = profileAboutElement.textContent;
   editProfilePopupElement.open();
+  editProfileFormValidator.cleanInputError();
+  editProfileFormValidator.toggleSubmitButtonState();
 });
+
 editProfilePopupElement.setEventListeners();
+
 openAddCardButton.addEventListener('click', () => {
   addCardPopupElement.open();
+  addCardPopupForm.reset();
+  addCardFormValidator.cleanInputError();
+  addCardFormValidator.toggleSubmitButtonState();
 });
+
 addCardPopupElement.setEventListeners();
