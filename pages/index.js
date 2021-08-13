@@ -2,7 +2,8 @@ import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWithForm from '../components/PopupWithForm.js'
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 import {items, settings} from '../utils/constants.js';
 
 const profileInfoElement = document.querySelector('.profile__info');
@@ -18,6 +19,7 @@ const cardTitlePopupFormInput = addCardPopupForm.elements["card-title"];
 const cardLinkPopupFormInput = addCardPopupForm.elements["card-link"];
 const editProfileFormValidator = new FormValidator(settings, editProfilePopupForm);
 const addCardFormValidator = new FormValidator(settings, addCardPopupForm);
+const userInfoElement = new UserInfo ('.profile__name', '.profile__about');
 
 function renderCard (item) {
     const card = new Card(item.name, item.link, '.gallery-item-template', '.gallery-table__item', handleCardClick);
@@ -31,10 +33,9 @@ gallerySection.renderItems();
 
 const editProfilePopupElement = new PopupWithForm ({
   popupSelector: '.popup_type_edit-profile',
-  handleFormSubmit: (evt) => {
+  handleFormSubmit: (evt, formValues) => {
     evt.preventDefault();
-    profileNameElement.textContent =  profileNamePopupFormInput.value;
-    profileAboutElement.textContent = profileAboutPopupFormInput.value;
+    userInfoElement.setUserInfo(formValues);
     editProfilePopupElement.close();
   }
 })
@@ -62,8 +63,7 @@ editProfileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 
 openEditProfileButton.addEventListener('click', () => {
-  profileNamePopupFormInput.value = profileNameElement.textContent;
-  profileAboutPopupFormInput.value = profileAboutElement.textContent;
+  editProfilePopupElement.setInputValues(userInfoElement.getUserInfo());
   editProfilePopupElement.open();
   editProfileFormValidator.cleanInputError();
   editProfileFormValidator.toggleSubmitButtonState();
