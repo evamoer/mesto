@@ -1,10 +1,13 @@
 export default class Card {
-    constructor (name, link, cardTemplateSelector, cardElementSelector, openFullImage) {
-        this._name = name;
+    constructor ({title, link}, {cardTemplateSelector, cardElementSelector, deleteCardButtonSelector, likeCardButtonSelector, cardImageContainerSelector}, handleCardClick) {
+        this._title = title;
         this._link = link;
         this._cardTemplateSelector = cardTemplateSelector;
         this._cardElementSelector = cardElementSelector;
-        this._openFullImage = openFullImage;
+        this._deleteCardButtonSelector = deleteCardButtonSelector;
+        this._likeCardButtonSelector = likeCardButtonSelector;
+        this._cardImageContainerSelector = cardImageContainerSelector;
+        this._handleCardClick = handleCardClick;
     }
 
     _getTemplate() {
@@ -13,15 +16,13 @@ export default class Card {
     }
 
     _setEventListeners() {
-        this._element.querySelector('.button_type_delete-card').addEventListener('click', () => {
-            this._deleteCard();
-        });
-        this._element.querySelector('.button_type_like').addEventListener('click', (evt) => {
-            this._likeCard(evt);
-        });
-        this._element.querySelector('.card__image-container').addEventListener('click', (evt) => {
-            this._openFullImage(evt);
-        })
+      const deleteCardButtonElement = this._element.querySelector(this._deleteCardButtonSelector);
+      const likeCardButtonElement = this._element.querySelector(this._likeCardButtonSelector);
+      const cardImageContainerElement = this._element.querySelector(this._cardImageContainerSelector);
+
+      deleteCardButtonElement.addEventListener('click', this._deleteCard.bind(this));
+      likeCardButtonElement.addEventListener('click', this._likeCard);
+      cardImageContainerElement.addEventListener('click', this._handleCardClick);
     }
 
     _deleteCard() {
@@ -32,8 +33,8 @@ export default class Card {
         evt.target.classList.toggle('button_type_like-active');
     }
 
-    _openFullImage(evt) {
-        this._openFullImage(evt);
+    _handleCardClick(evt) {
+        this._handleCardClick(evt);
     }
 
     generateCard() {
@@ -41,8 +42,8 @@ export default class Card {
         const cardImageElement = this._element.querySelector('.card__image');
         const cardTitleElement = this._element.querySelector('.card__title');
         cardImageElement.src = this._link;
-        cardImageElement.alt = this._name;
-        cardTitleElement.textContent = this._name;
+        cardImageElement.alt = this._title;
+        cardTitleElement.textContent = this._title;
         this._setEventListeners();
         return this._element;
     }

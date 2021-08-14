@@ -1,31 +1,31 @@
 export const items = [
   {
-    name: 'Архыз',
+    title: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
   },
   {
-    name: 'Челябинская область',
+    title: 'Челябинская область',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
   },
   {
-    name: 'Иваново',
+    title: 'Иваново',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
   },
   {
-    name: 'Камчатка',
+    title: 'Камчатка',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
   },
   {
-    name: 'Холмогорский район',
+    title: 'Холмогорский район',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
   },
   {
-    name: 'Байкал',
+    title: 'Байкал',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
 
-export const settings = {
+export const validatorSettings = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
@@ -35,3 +35,18 @@ export const settings = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 };
+
+export const cardSettings = {
+  cardTemplateSelector: '.gallery-item-template',
+  cardElementSelector: '.gallery-table__item',
+  deleteCardButtonSelector: '.button_type_delete-card',
+  likeCardButtonSelector: '.button_type_like',
+  cardImageContainerSelector: '.card__image-container'
+}
+
+export const profileSettings = {
+  profileNameElementSelector: '.profile__name',
+  profileAboutElementSelector: '.profile__about',
+  profileNameInputNameAttribute: 'profile-name',
+  profileAboutInputNameAttribute: 'profile-about'
+}
