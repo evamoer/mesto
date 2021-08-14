@@ -62,7 +62,7 @@ openEditProfileButton.addEventListener('click', () => {
 
 openAddCardButton.addEventListener('click', () => {
   addCardPopupForm.reset();
-  ddCardPopupElement.open();
+  addCardPopupElement.open();
   addCardFormValidator.cleanInputError();
   addCardFormValidator.toggleSubmitButtonState();
 });
