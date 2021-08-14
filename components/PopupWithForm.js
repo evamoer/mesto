@@ -10,16 +10,16 @@ export default class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    const formValues = {};
+    const inputValuesData = {};
     this._inputList.forEach((input) => {
-      formValues[input.name] = input.value;
+      inputValuesData[input.name] = input.value;
     })
-    return formValues;
+    return inputValuesData;
   }
 
-  setInputValues(userData) {
-    document.getElementsByName["profile-name"] = userData["profile-name"];
-    document.getElementsByName["profile-about"] = userData["profile-about"];
+  setInputValues({profileNameInputName, profileAboutInputName}) {
+    document.getElementsByName[profileNameInputName] = profileNameInputName;
+    document.getElementsByName[profileAboutInputName] =  profileAboutInputName;
   }
 
   setEventListeners() {
