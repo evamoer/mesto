@@ -26,10 +26,14 @@ export default class PopupWithForm extends Popup {
     this._closeButtonElement.addEventListener('click', this.close.bind(this));
   }
 
+  open() {
+    this._formValidator.cleanInputError();
+    this._formValidator.toggleSubmitButtonState();
+    super.open();
+  }
+
   close() {
     super.close();
     this._formElement.reset();
-    this._formValidator.cleanInputError();
-    this._formValidator.toggleSubmitButtonState();
   }
 }
