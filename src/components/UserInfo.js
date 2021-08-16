@@ -9,8 +9,8 @@ export default class UserInfo {
 
   getUserInfo() {
     const userData = ({
-      'profile-name': this._profileNameElement.textContent,
-      'profile-about': this._profileAboutElement.textContent});
+      profileName: this._profileNameElement.textContent,
+      profileAbout: this._profileAboutElement.textContent});
     return userData;
   }
 

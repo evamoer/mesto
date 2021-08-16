@@ -62,8 +62,8 @@ const addCardPopupElement = new PopupWithForm({
 
 openEditProfileButton.addEventListener('click', () => {
   const editProfileFormInputValues = userInfoElement.getUserInfo();
-  profileNameInputElement.value = editProfileFormInputValues['profile-name'];
-  profileAboutInputElement.value = editProfileFormInputValues['profile-about'];
+  profileNameInputElement.value = editProfileFormInputValues['profileName'];
+  profileAboutInputElement.value = editProfileFormInputValues['profileAbout'];
   editProfilePopupElement.open();
 });
 
