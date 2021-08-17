@@ -29,7 +29,7 @@ function handleCardClick(evt) {
 function renderCard (item) {
     const card = new Card(item, cardSettings, handleCardClick);
     const cardElement = card.generateCard();
-    gallerySection.addItem(cardElement, item.isArray);
+    gallerySection.addItem(cardElement);
 };
 
 const gallerySection = new Section({items: items, renderer: renderCard}, '.gallery-table');
@@ -52,8 +52,7 @@ const addCardPopupElement = new PopupWithForm({
     evt.preventDefault();
     const newCardData = {
       title: cardTitleInputElement.value,
-      link: cardLinkInputElement.value,
-      isArray: false
+      link: cardLinkInputElement.value
     };
     renderCard(newCardData);
     addCardPopupElement.close();
