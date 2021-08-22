@@ -6,7 +6,8 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
-import {items, validatorSettings, profileSettings, cardSettings} from '../utils/constants.js';
+import Api from '../components/Api.js';
+import {validatorSettings, profileSettings, cardSettings} from '../utils/constants.js';
 
 const buttonForOpenProfileInfo = document.querySelector('.button_type_edit');
 const buttonForOpenAddCard = document.querySelector('.button_type_add');
@@ -14,13 +15,20 @@ const popupEditProfileForm = document.getElementById('popup__edit-profile-form')
 const profileNameInputElement = popupEditProfileForm.elements['profile-name']
 const profileAboutInputElement = popupEditProfileForm.elements['profile-about']
 const popupAddCardForm = document.getElementById('popup__add-card-form');
-const cardTitleInputElement = popupAddCardForm.elements["card-title"];
-const cardLinkInputElement = popupAddCardForm.elements["card-link"];
 const validatorForEditProfileForm = new FormValidator(validatorSettings, popupEditProfileForm);
 const validatorForAddCardForm = new FormValidator(validatorSettings, popupAddCardForm);
 const userInfoElement = new UserInfo (profileSettings);
 const popupWithImage = new PopupWithImage ('.popup_type_full-image');
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27',
+  headers: {
+    authorization: '8db06075-d4ea-471e-8c36-db2b91e349e8',
+    'Content-Type': 'application/json'
+  }
+});
 
+console.log(api.getUserInfo());
+userInfoElement.setUserInfo(api.getUserInfo());
 
 function handleCardClick(evt) {
   popupWithImage.open(evt);
@@ -32,7 +40,7 @@ function renderCard (item) {
     gallerySection.addItem(cardElement);
 };
 
-const gallerySection = new Section({items: items, renderer: renderCard}, '.gallery-table');
+const gallerySection = new Section({items: api.getInitialCards(), renderer: renderCard}, '.gallery-table');
 gallerySection.renderItems();
 
 const editProfilePopupElement = new PopupWithForm ({
@@ -48,13 +56,9 @@ const editProfilePopupElement = new PopupWithForm ({
 const addCardPopupElement = new PopupWithForm({
   popupSelector: '.popup_type_add-card',
   formValidator: validatorForAddCardForm,
-  handleFormSubmit: (evt) => {
+  handleFormSubmit: (evt, inputValuesData) => {
     evt.preventDefault();
-    const newCardData = {
-      title: cardTitleInputElement.value,
-      link: cardLinkInputElement.value
-    };
-    renderCard(newCardData);
+    renderCard(inputValuesData);
     addCardPopupElement.close();
   }
 })
@@ -73,4 +77,5 @@ editProfilePopupElement.setEventListeners();
 popupWithImage.setEventListeners();
 validatorForEditProfileForm.enableValidation();
 validatorForAddCardForm.enableValidation();
+
 

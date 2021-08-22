@@ -10,7 +10,7 @@ export default class FormValidator {
     }
 
     _defineErrorElement(inputElement) {
-      this._errorElement = this._formElement.querySelector(`#${inputElement.id}-input-error`);
+      this._errorElement = this._formElement.querySelector(`#${inputElement.name}-input-error`);
       return this._errorElement;
     }
 

@@ -15,7 +15,10 @@ export default class UserInfo {
   }
 
   setUserInfo(inputValuesData) {
-    this._profileNameElement.textContent = inputValuesData[this._profileNameInputName];
-    this._profileAboutElement.textContent = inputValuesData[this._profileAboutInputName];
+    inputValuesData.
+    then(data => {
+      this._profileNameElement.textContent = data.name;
+      this._profileAboutElement.textContent = data.about;
+    })
   }
 }
