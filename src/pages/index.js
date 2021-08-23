@@ -18,6 +18,7 @@ const popupAddCardForm = document.getElementById('popup__add-card-form');
 const validatorForEditProfileForm = new FormValidator(validatorSettings, popupEditProfileForm);
 const validatorForAddCardForm = new FormValidator(validatorSettings, popupAddCardForm);
 const userInfoElement = new UserInfo (profileSettings);
+
 const popupWithImage = new PopupWithImage ('.popup_type_full-image');
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27',
@@ -27,8 +28,10 @@ const api = new Api({
   }
 });
 
-console.log(api.getUserInfo());
-userInfoElement.setUserInfo(api.getUserInfo());
+api.getUserProfileData().then(data => {
+  userInfoElement.setUserInfo(data);
+})
+
 
 function handleCardClick(evt) {
   popupWithImage.open(evt);
@@ -48,6 +51,7 @@ const editProfilePopupElement = new PopupWithForm ({
   formValidator: validatorForEditProfileForm,
   handleFormSubmit: (evt, inputValuesData) => {
     evt.preventDefault();
+    api.updateUserProfileData(inputValuesData);
     userInfoElement.setUserInfo(inputValuesData);
     editProfilePopupElement.close();
   }

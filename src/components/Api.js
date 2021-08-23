@@ -19,7 +19,7 @@ export default class Api {
     });
   }
 
-  getUserInfo() {
+  getUserProfileData() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
@@ -33,5 +33,21 @@ export default class Api {
       console.log(err);
     })
   }
+
+  updateUserProfileData(inputValuesData) {
+    console.log(inputValuesData);
+    fetch('https://mesto.nomoreparties.co/v1/cohort-27/users/me', {
+      method: 'PATCH',
+      headers: {
+        authorization: '8db06075-d4ea-471e-8c36-db2b91e349e8',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: inputValuesData.name,
+        about: inputValuesData.about
+      })
+    });
+  }
+
 
 }
