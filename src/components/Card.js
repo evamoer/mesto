@@ -1,14 +1,16 @@
 export default class Card {
-    constructor ({name, link, likes}, {cardTemplateSelector, cardElementSelector, deleteCardButtonSelector, likeCardButtonSelector, cardImageContainerSelector}, handleCardClick) {
+    constructor ({name, link, likes}, {cardTemplateSelector, cardElementSelector, deleteCardButtonSelector, deletePopupSelector, likeCardButtonSelector, cardImageContainerSelector}, handleCardClick, handleDeleteClick) {
         this._name = name;
         this._link = link;
         this._likes = likes;
         this._cardTemplateSelector = cardTemplateSelector;
         this._cardElementSelector = cardElementSelector;
         this._deleteCardButtonSelector = deleteCardButtonSelector;
+        this._deletePopupSelector = deletePopupSelector;
         this._likeCardButtonSelector = likeCardButtonSelector;
         this._cardImageContainerSelector = cardImageContainerSelector;
         this._handleCardClick = handleCardClick;
+        this._handleDeleteClick = handleDeleteClick;
     }
 
     _getTemplate() {
@@ -21,21 +23,31 @@ export default class Card {
       const likeCardButtonElement = this._element.querySelector(this._likeCardButtonSelector);
       const cardImageContainerElement = this._element.querySelector(this._cardImageContainerSelector);
 
-      deleteCardButtonElement.addEventListener('click', this._deleteCard.bind(this));
+      deleteCardButtonElement.addEventListener('click', () => {
+        this._handleDeleteClick();
+        this._deleteCard();
+      });
       likeCardButtonElement.addEventListener('click', this._likeCard);
       cardImageContainerElement.addEventListener('click', this._handleCardClick);
     }
 
     _deleteCard() {
-        this._element.remove();
+      console.log(this._deletePopupSelector);
+      const popupDeleteCard = document.querySelector(this._deletePopupSelector);
+      console.log(popupDeleteCard);
+        /*this._element.remove();*/
     }
 
     _likeCard(evt) {
-        evt.target.classList.toggle('button_type_like-active');
+      evt.target.classList.toggle('button_type_like-active');
     }
 
     _handleCardClick(evt) {
-        this._handleCardClick(evt);
+      this._handleCardClick(evt);
+    }
+
+    _handleDeleteClick() {
+      this._handleDeleteClick();
     }
 
     generateCard() {

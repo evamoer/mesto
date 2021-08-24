@@ -13,6 +13,7 @@ export const cardSettings = {
   cardTemplateSelector: '.gallery-item-template',
   cardElementSelector: '.gallery-table__item',
   deleteCardButtonSelector: '.button_type_delete-card',
+  deletePopupSelector: '.popup_type_delete-card',
   likeCardButtonSelector: '.button_type_like',
   cardImageContainerSelector: '.card__image-container'
 }

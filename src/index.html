@@ -89,6 +89,16 @@
           <figcaption class="popup__full-image-caption"></figcaption>
         </figure>
       </div>
+      <!-- Попап удаления карточки -->
+      <div class="popup popup_type_delete-card">
+        <div class="popup__container">
+          <button class="button button_type_close" type="button" aria-label="Закрыть всплывающее окно"></button>
+          <h2 class="popup__title">Вы уверены?</h2>
+          <form class="popup__form" action="/" method="POST" id="popup__delete-card-form" name="popup__delete-card-form" novalidate>
+            <button class="button button_type_submit popup__button" type="submit" aria-label="Сохранить изменения">Да</button>
+          </form>
+        </div>
+      </div>
     </main>
     <footer class="footer section">
       <p class="footer__copyright">© 2020 Mesto Russia</p>

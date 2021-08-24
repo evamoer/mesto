@@ -14,10 +14,21 @@ const popupEditProfileForm = document.getElementById('popup__edit-profile-form')
 const profileNameInputElement = popupEditProfileForm.elements['profile-name']
 const profileAboutInputElement = popupEditProfileForm.elements['profile-about']
 const popupAddCardForm = document.getElementById('popup__add-card-form');
+const popupDeleteCardForm = document.getElementById('popup__delete-card-form');
 const validatorForEditProfileForm = new FormValidator(validatorSettings, popupEditProfileForm);
 const validatorForAddCardForm = new FormValidator(validatorSettings, popupAddCardForm);
+const validatorForDeleteCardForm = new FormValidator(validatorSettings, popupDeleteCardForm);
 const userInfoElement = new UserInfo (profileSettings);
 const popupWithImage = new PopupWithImage ('.popup_type_full-image');
+const popupDeleteCard = new PopupWithForm({
+  popupSelector: '.popup_type_delete-card',
+  formValidator: validatorForDeleteCardForm,
+  handleFormSubmit: (evt) => {
+    evt.preventDefault();
+    console.log(evt);
+  }
+})
+
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27',
   headers: {
@@ -28,8 +39,11 @@ const api = new Api({
 const handleCardClick = ((evt) => {
   popupWithImage.open(evt);
 });
+const handleDeleteClick = () => {
+  popupDeleteCard.open();
+};
 const renderCard = ((item) => {
-    const card = new Card(item, cardSettings, handleCardClick);
+    const card = new Card(item, cardSettings, handleCardClick, handleDeleteClick);
     const cardElement = card.generateCard();
     return cardElement;
 });
@@ -55,6 +69,9 @@ const addCardPopupElement = new PopupWithForm({
     gallerySection.addItem(renderCard(inputValuesData));
   }
 })
+
+
+
 const handleButtonForOpenProfileInfo = () => {
   const editProfileFormInputValues = userInfoElement.getUserInfo();
   profileNameInputElement.value = editProfileFormInputValues['profileName'];
