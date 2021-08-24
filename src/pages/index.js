@@ -20,14 +20,15 @@ const validatorForAddCardForm = new FormValidator(validatorSettings, popupAddCar
 const validatorForDeleteCardForm = new FormValidator(validatorSettings, popupDeleteCardForm);
 const userInfoElement = new UserInfo (profileSettings);
 const popupWithImage = new PopupWithImage ('.popup_type_full-image');
+
 const popupDeleteCard = new PopupWithForm({
   popupSelector: '.popup_type_delete-card',
   formValidator: validatorForDeleteCardForm,
   handleFormSubmit: (evt) => {
     evt.preventDefault();
-    console.log(evt);
+
   }
-})
+});
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27',
@@ -36,12 +37,18 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
+
 const handleCardClick = ((evt) => {
   popupWithImage.open(evt);
 });
+
 const handleDeleteClick = () => {
   popupDeleteCard.open();
+  return new Promise(function(resolve, reject) {
+    popupDeleteCardForm.onsubmit = resolve;
+  })
 };
+
 const renderCard = ((item) => {
     const card = new Card(item, cardSettings, handleCardClick, handleDeleteClick);
     const cardElement = card.generateCard();
@@ -51,6 +58,7 @@ const renderCard = ((item) => {
 console.log(api.getInitialCards());
 
 const gallerySection = new Section({items: api.getInitialCards(), renderer: renderCard}, '.gallery-table');
+
 const editProfilePopupElement = new PopupWithForm ({
   popupSelector: '.popup_type_edit-profile',
   formValidator: validatorForEditProfileForm,
@@ -59,7 +67,8 @@ const editProfilePopupElement = new PopupWithForm ({
     api.updateUserProfileData(inputValuesData);
     userInfoElement.setUserInfo(inputValuesData);
   }
-})
+});
+
 const addCardPopupElement = new PopupWithForm({
   popupSelector: '.popup_type_add-card',
   formValidator: validatorForAddCardForm,
@@ -68,8 +77,7 @@ const addCardPopupElement = new PopupWithForm({
     api.updateCardsArray(inputValuesData);
     gallerySection.addItem(renderCard(inputValuesData));
   }
-})
-
+});
 
 
 const handleButtonForOpenProfileInfo = () => {
@@ -77,18 +85,20 @@ const handleButtonForOpenProfileInfo = () => {
   profileNameInputElement.value = editProfileFormInputValues['profileName'];
   profileAboutInputElement.value = editProfileFormInputValues['profileAbout'];
   editProfilePopupElement.open();
-}
+};
 
 gallerySection.renderItems();
+
 api.getUserProfileData().then(data => {
   userInfoElement.setUserInfo(data);
-})
+});
 
 buttonForOpenProfileInfo.addEventListener('click', handleButtonForOpenProfileInfo);
 buttonForOpenAddCard.addEventListener('click', addCardPopupElement.open.bind(addCardPopupElement));
 addCardPopupElement.setEventListeners();
 editProfilePopupElement.setEventListeners();
 popupWithImage.setEventListeners();
+popupDeleteCard.setEventListeners();
 validatorForEditProfileForm.enableValidation();
 validatorForAddCardForm.enableValidation();
 

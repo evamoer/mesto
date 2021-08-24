@@ -1,8 +1,9 @@
 export default class Card {
-    constructor ({name, link, likes}, {cardTemplateSelector, cardElementSelector, deleteCardButtonSelector, deletePopupSelector, likeCardButtonSelector, cardImageContainerSelector}, handleCardClick, handleDeleteClick) {
+    constructor ({name, link, likes, owner}, {cardTemplateSelector, cardElementSelector, deleteCardButtonSelector, deletePopupSelector, likeCardButtonSelector, cardImageContainerSelector}, handleCardClick, handleDeleteClick) {
         this._name = name;
         this._link = link;
         this._likes = likes;
+        this._owner = owner;
         this._cardTemplateSelector = cardTemplateSelector;
         this._cardElementSelector = cardElementSelector;
         this._deleteCardButtonSelector = deleteCardButtonSelector;
@@ -24,7 +25,6 @@ export default class Card {
       const cardImageContainerElement = this._element.querySelector(this._cardImageContainerSelector);
 
       deleteCardButtonElement.addEventListener('click', () => {
-        this._handleDeleteClick();
         this._deleteCard();
       });
       likeCardButtonElement.addEventListener('click', this._likeCard);
@@ -32,10 +32,10 @@ export default class Card {
     }
 
     _deleteCard() {
-      console.log(this._deletePopupSelector);
-      const popupDeleteCard = document.querySelector(this._deletePopupSelector);
-      console.log(popupDeleteCard);
-        /*this._element.remove();*/
+      this._handleDeleteClick()
+      .then(() => this._element.remove())
+      .catch(()=> console.log('no-no'))
+
     }
 
     _likeCard(evt) {
@@ -46,15 +46,14 @@ export default class Card {
       this._handleCardClick(evt);
     }
 
-    _handleDeleteClick() {
-      this._handleDeleteClick();
-    }
-
     generateCard() {
         this._element = this._getTemplate();
         const cardImageElement = this._element.querySelector('.card__image');
         const cardTitleElement = this._element.querySelector('.card__title');
         const cardLikeNumber = this._element.querySelector('.card__like-number');
+        if (this._owner.name !== document.querySelector('.profile__name').textContent) {
+          this._element.querySelector('.button_type_delete-card').style.display = 'none';
+        }
         cardImageElement.src = this._link;
         cardImageElement.alt = this._name;
         cardTitleElement.textContent = this._name;
