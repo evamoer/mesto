@@ -33,6 +33,9 @@ const renderCard = ((item) => {
     const cardElement = card.generateCard();
     return cardElement;
 });
+
+console.log(api.getInitialCards());
+
 const gallerySection = new Section({items: api.getInitialCards(), renderer: renderCard}, '.gallery-table');
 const editProfilePopupElement = new PopupWithForm ({
   popupSelector: '.popup_type_edit-profile',
