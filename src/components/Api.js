@@ -35,13 +35,9 @@ export default class Api {
   }
 
   updateUserProfileData(inputValuesData) {
-    console.log(inputValuesData);
-    fetch('https://mesto.nomoreparties.co/v1/cohort-27/users/me', {
+    fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: {
-        authorization: '8db06075-d4ea-471e-8c36-db2b91e349e8',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: inputValuesData.name,
         about: inputValuesData.about
@@ -49,5 +45,15 @@ export default class Api {
     });
   }
 
+  updateCardsArray(cardData) {
+    fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: cardData.name,
+        link: cardData.link
+      })
+    })
+  }
 
 }

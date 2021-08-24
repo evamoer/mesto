@@ -10,7 +10,7 @@ export default class Section {
     then(data => {
       this._reversedItems = data.reverse();
       this._reversedItems.forEach((item) => {
-        this._renderer(item)
+        this.addItem(this._renderer(item));
       });
     });
   }

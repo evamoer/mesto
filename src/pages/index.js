@@ -1,5 +1,4 @@
 import './index.css'
-
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
@@ -18,7 +17,6 @@ const popupAddCardForm = document.getElementById('popup__add-card-form');
 const validatorForEditProfileForm = new FormValidator(validatorSettings, popupEditProfileForm);
 const validatorForAddCardForm = new FormValidator(validatorSettings, popupAddCardForm);
 const userInfoElement = new UserInfo (profileSettings);
-
 const popupWithImage = new PopupWithImage ('.popup_type_full-image');
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27',
@@ -27,25 +25,15 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
-
-api.getUserProfileData().then(data => {
-  userInfoElement.setUserInfo(data);
-})
-
-
-function handleCardClick(evt) {
+const handleCardClick = ((evt) => {
   popupWithImage.open(evt);
-}
-
-function renderCard (item) {
+});
+const renderCard = ((item) => {
     const card = new Card(item, cardSettings, handleCardClick);
     const cardElement = card.generateCard();
-    gallerySection.addItem(cardElement);
-};
-
+    return cardElement;
+});
 const gallerySection = new Section({items: api.getInitialCards(), renderer: renderCard}, '.gallery-table');
-gallerySection.renderItems();
-
 const editProfilePopupElement = new PopupWithForm ({
   popupSelector: '.popup_type_edit-profile',
   formValidator: validatorForEditProfileForm,
@@ -53,29 +41,31 @@ const editProfilePopupElement = new PopupWithForm ({
     evt.preventDefault();
     api.updateUserProfileData(inputValuesData);
     userInfoElement.setUserInfo(inputValuesData);
-    editProfilePopupElement.close();
   }
 })
-
 const addCardPopupElement = new PopupWithForm({
   popupSelector: '.popup_type_add-card',
   formValidator: validatorForAddCardForm,
   handleFormSubmit: (evt, inputValuesData) => {
     evt.preventDefault();
-    renderCard(inputValuesData);
-    addCardPopupElement.close();
+    api.updateCardsArray(inputValuesData);
+    gallerySection.addItem(renderCard(inputValuesData));
   }
 })
-
-buttonForOpenProfileInfo.addEventListener('click', () => {
+const handleButtonForOpenProfileInfo = () => {
   const editProfileFormInputValues = userInfoElement.getUserInfo();
   profileNameInputElement.value = editProfileFormInputValues['profileName'];
   profileAboutInputElement.value = editProfileFormInputValues['profileAbout'];
   editProfilePopupElement.open();
-});
+}
 
+gallerySection.renderItems();
+api.getUserProfileData().then(data => {
+  userInfoElement.setUserInfo(data);
+})
+
+buttonForOpenProfileInfo.addEventListener('click', handleButtonForOpenProfileInfo);
 buttonForOpenAddCard.addEventListener('click', addCardPopupElement.open.bind(addCardPopupElement));
-
 addCardPopupElement.setEventListeners();
 editProfilePopupElement.setEventListeners();
 popupWithImage.setEventListeners();
