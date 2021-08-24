@@ -78,6 +78,10 @@
 
 @import url(../blocks/card/__title/card__title.css);
 
+@import url(../blocks/card/__like-area/card__like-area.css);
+
+@import url(../blocks/card/__like-number/card__like-number.css);
+
 /* ---------- Popup Section ---------- */
 
 @import url(../blocks/popup/popup.css);

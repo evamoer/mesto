@@ -1,8 +1,10 @@
 .button_type_like {
-  min-width: 22px;
-  height: auto;
-  margin-left: auto;
+  width: 22px;
+  height: 19px;
   background: transparent center no-repeat url(../../../images/like.svg);
+  position: absolute;
+  top: -3px;
+  left: 0;
 }
 
 .button_type_like:hover {
