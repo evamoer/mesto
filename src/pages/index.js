@@ -45,8 +45,8 @@ const handleDeleteClick = ((cardId) => {
   return new Promise ((resolve, reject) => {
     popupDeleteCard.open();
     popupDeleteCardForm.onsubmit = () => {
-      api.deleteCard(cardId);
-      resolve();
+      api.deleteCard(cardId)
+      .then(() => resolve());
     }
   });
 });
