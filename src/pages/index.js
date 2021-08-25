@@ -51,8 +51,22 @@ const handleDeleteClick = ((cardId) => {
   });
 });
 
+const handleLikeClick = ((data) => {
+  const status = data.event.target.classList.contains('button_type_like-active');
+  data.event.target.classList.toggle('button_type_like-active');
+  return new Promise((resolve, reject) => {
+    if (status) {
+      api.unlikeCard(data.id)
+      .then(likeData => resolve(likeData));
+    } else {
+      api.likeCard(data.id)
+      .then(likeData => resolve(likeData));
+    }
+  })
+});
+
 const renderCard = ((item) => {
-  const card = new Card(item, cardSettings, handleCardClick, handleDeleteClick);
+  const card = new Card(item, cardSettings, handleCardClick, handleDeleteClick, handleLikeClick);
   const cardElement = card.generateCard();
   return cardElement;
 });
