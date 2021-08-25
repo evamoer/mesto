@@ -35,14 +35,23 @@ export default class Api {
   }
 
   updateUserProfileData(inputValuesData) {
-    fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         name: inputValuesData.name,
         about: inputValuesData.about
       })
-    });
+    })
+    .then( res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка ${res.status}`);
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   addCard(cardData) {

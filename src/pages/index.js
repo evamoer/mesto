@@ -52,9 +52,9 @@ const handleDeleteClick = ((cardId) => {
 });
 
 const renderCard = ((item) => {
-    const card = new Card(item, cardSettings, handleCardClick, handleDeleteClick);
-    const cardElement = card.generateCard();
-    return cardElement;
+  const card = new Card(item, cardSettings, handleCardClick, handleDeleteClick);
+  const cardElement = card.generateCard();
+  return cardElement;
 });
 
 
@@ -67,8 +67,10 @@ const editProfilePopupElement = new PopupWithForm ({
   formValidator: validatorForEditProfileForm,
   handleFormSubmit: (evt, inputValuesData) => {
     evt.preventDefault();
-    api.updateUserProfileData(inputValuesData);
-    userInfoElement.setUserInfo(inputValuesData);
+    api.updateUserProfileData(inputValuesData)
+    .then((userData) => {
+      userInfoElement.setUserInfo(userData);
+    })
   }
 });
 
