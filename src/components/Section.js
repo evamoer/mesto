@@ -7,12 +7,13 @@ export default class Section {
 
   renderItems() {
     this._renderedItems.
-    then(data => {
-      this._reversedItems = data.reverse();
-      this._reversedItems.forEach((item) => {
-        this.addItem(this._renderer(item));
+      then(items => {
+        const reversedItems = items.reverse();
+        reversedItems.forEach((item) => {
+          const itemElement = this._renderer(item);
+          this.addItem(itemElement);
+        });
       });
-    });
   }
 
   addItem(item) {

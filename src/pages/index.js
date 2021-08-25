@@ -26,7 +26,6 @@ const popupDeleteCard = new PopupWithForm({
   formValidator: validatorForDeleteCardForm,
   handleFormSubmit: (evt) => {
     evt.preventDefault();
-
   }
 });
 
@@ -42,18 +41,22 @@ const handleCardClick = ((evt) => {
   popupWithImage.open(evt);
 });
 
-const handleDeleteClick = () => {
-  popupDeleteCard.open();
-  return new Promise(function(resolve, reject) {
-    popupDeleteCardForm.onsubmit = resolve;
-  })
-};
+const handleDeleteClick = ((cardId) => {
+  return new Promise ((resolve, reject) => {
+    popupDeleteCard.open();
+    popupDeleteCardForm.onsubmit = () => {
+      api.deleteCard(cardId);
+      resolve();
+    }
+  });
+});
 
 const renderCard = ((item) => {
     const card = new Card(item, cardSettings, handleCardClick, handleDeleteClick);
     const cardElement = card.generateCard();
     return cardElement;
 });
+
 
 console.log(api.getInitialCards());
 
@@ -74,8 +77,11 @@ const addCardPopupElement = new PopupWithForm({
   formValidator: validatorForAddCardForm,
   handleFormSubmit: (evt, inputValuesData) => {
     evt.preventDefault();
-    api.updateCardsArray(inputValuesData);
-    gallerySection.addItem(renderCard(inputValuesData));
+    api.addCard(inputValuesData)
+    .then((data) => {
+      const newCard = renderCard(data);
+      gallerySection.addItem(newCard);
+    })
   }
 });
 
