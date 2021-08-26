@@ -31,7 +31,7 @@ export default class Api {
     })
     .catch(err => {
       console.log(err);
-    })
+    });
   }
 
   updateUserProfileData(inputValuesData) {
@@ -51,7 +51,7 @@ export default class Api {
     })
     .catch(err => {
       console.log(err);
-    })
+    });
   }
 
   addCard(cardData) {
@@ -71,7 +71,7 @@ export default class Api {
     })
     .catch(err => {
       console.log(err);
-    })
+    });
   }
 
   deleteCard(cardId) {
@@ -103,7 +103,7 @@ export default class Api {
     })
     .catch(err => {
       console.log(err);
-    })
+    });
   }
 
   unlikeCard(cardId) {
@@ -119,7 +119,26 @@ export default class Api {
     })
     .catch(err => {
       console.log(err);
+    });
+  }
+
+  changeAvatar({avatar}) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatar
+      })
     })
+    .then( res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка ${res.status}`);
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
 }

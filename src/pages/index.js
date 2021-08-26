@@ -10,14 +10,17 @@ import {validatorSettings, profileSettings, cardSettings} from '../utils/constan
 
 const buttonForOpenProfileInfo = document.querySelector('.button_type_edit');
 const buttonForOpenAddCard = document.querySelector('.button_type_add');
+const buttonForOpenAvatarEdit = document.querySelector('.profile__avatar-container');
 const popupEditProfileForm = document.getElementById('popup__edit-profile-form');
 const profileNameInputElement = popupEditProfileForm.elements['profile-name']
 const profileAboutInputElement = popupEditProfileForm.elements['profile-about']
 const popupAddCardForm = document.getElementById('popup__add-card-form');
 const popupDeleteCardForm = document.getElementById('popup__delete-card-form');
+const popupEditAvatarForm = document.getElementById('popup__edit-avatar-form');
 const validatorForEditProfileForm = new FormValidator(validatorSettings, popupEditProfileForm);
 const validatorForAddCardForm = new FormValidator(validatorSettings, popupAddCardForm);
 const validatorForDeleteCardForm = new FormValidator(validatorSettings, popupDeleteCardForm);
+const validatorForEditAvatarForm = new FormValidator(validatorSettings, popupEditAvatarForm);
 const userInfoElement = new UserInfo (profileSettings);
 const popupWithImage = new PopupWithImage ('.popup_type_full-image');
 
@@ -83,6 +86,7 @@ const editProfilePopupElement = new PopupWithForm ({
     evt.preventDefault();
     api.updateUserProfileData(inputValuesData)
     .then((userData) => {
+      console.log(userData);
       userInfoElement.setUserInfo(userData);
     })
   }
@@ -101,6 +105,18 @@ const addCardPopupElement = new PopupWithForm({
   }
 });
 
+const editAvatarPopupElement = new PopupWithForm({
+  popupSelector: '.popup_type_edit-avatar',
+  formValidator: validatorForEditAvatarForm,
+  handleFormSubmit: (evt, inputValuesData) => {
+    evt.preventDefault();
+    api.changeAvatar(inputValuesData)
+    .then((data) => {
+      document.querySelector('.profile__avatar').src = data.avatar;
+    })
+  }
+})
+
 
 const handleButtonForOpenProfileInfo = () => {
   const editProfileFormInputValues = userInfoElement.getUserInfo();
@@ -113,15 +129,19 @@ gallerySection.renderItems();
 
 api.getUserProfileData().then(data => {
   userInfoElement.setUserInfo(data);
+  document.querySelector('.profile__avatar').src = data.avatar;
 });
 
 buttonForOpenProfileInfo.addEventListener('click', handleButtonForOpenProfileInfo);
 buttonForOpenAddCard.addEventListener('click', addCardPopupElement.open.bind(addCardPopupElement));
+buttonForOpenAvatarEdit.addEventListener('click', editAvatarPopupElement.open.bind(editAvatarPopupElement));
 addCardPopupElement.setEventListeners();
 editProfilePopupElement.setEventListeners();
 popupWithImage.setEventListeners();
 popupDeleteCard.setEventListeners();
+editAvatarPopupElement.setEventListeners();
 validatorForEditProfileForm.enableValidation();
 validatorForAddCardForm.enableValidation();
+validatorForEditAvatarForm.enableValidation();
 
 
