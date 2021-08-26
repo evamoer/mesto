@@ -74,9 +74,6 @@ const renderCard = ((item) => {
   return cardElement;
 });
 
-
-console.log(api.getInitialCards());
-
 const gallerySection = new Section({items: api.getInitialCards(), renderer: renderCard}, '.gallery-table');
 
 const editProfilePopupElement = new PopupWithForm ({
@@ -84,11 +81,12 @@ const editProfilePopupElement = new PopupWithForm ({
   formValidator: validatorForEditProfileForm,
   handleFormSubmit: (evt, inputValuesData) => {
     evt.preventDefault();
+    editProfilePopupElement.renderLoading(true);
     api.updateUserProfileData(inputValuesData)
     .then((userData) => {
-      console.log(userData);
       userInfoElement.setUserInfo(userData);
     })
+    .finally(() => editProfilePopupElement.renderLoading(false))
   }
 });
 
@@ -110,10 +108,12 @@ const editAvatarPopupElement = new PopupWithForm({
   formValidator: validatorForEditAvatarForm,
   handleFormSubmit: (evt, inputValuesData) => {
     evt.preventDefault();
+    editAvatarPopupElement.renderLoading(true);
     api.changeAvatar(inputValuesData)
     .then((data) => {
       document.querySelector('.profile__avatar').src = data.avatar;
     })
+    .finally(() => editAvatarPopupElement.renderLoading(false))
   }
 })
 
