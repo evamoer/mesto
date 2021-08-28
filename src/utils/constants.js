@@ -13,14 +13,16 @@ export const cardSettings = {
   cardTemplateSelector: '.gallery-item-template',
   cardElementSelector: '.gallery-table__item',
   deleteCardButtonSelector: '.button_type_delete-card',
-  deletePopupSelector: '.popup_type_delete-card',
   likeCardButtonSelector: '.button_type_like',
-  cardImageContainerSelector: '.card__image-container'
+  activeLikeButtonClass: 'button_type_like-active',
+  cardImageContainerSelector: '.card__image-container',
+  cardImageSelector: '.card__image',
+  cardTitleSelector: '.card__title',
+  cardLikeNumberSelector: '.card__like-number',
+
 }
 
 export const profileSettings = {
   profileNameElementSelector: '.profile__name',
-  profileAboutElementSelector: '.profile__about',
-  profileNameInputNameAttribute: 'profile-name',
-  profileAboutInputNameAttribute: 'profile-about'
+  profileAboutElementSelector: '.profile__about'
 }

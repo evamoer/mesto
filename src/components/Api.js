@@ -4,37 +4,39 @@ export default class Api {
     this._headers = headers;
   }
 
-  getInitialCards() {
+  //обработчик ответа запроса
+  _responseHandler(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
+  //проверка запроса при ошибке
+  _errorChecker(err) {
+    console.log(err);
+  }
+
+  //GET запрос на текущие карточки с сервера
+  receiveCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers
+      headers: this._headers,
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(res => this._responseHandler(res))
+      .catch(err => this._errorHandler(err));
   }
 
-  getUserProfileData() {
+  //GET запрос на данные пользователя
+  getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers
+      headers: this._headers,
     })
-    .then( res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    .then(res => this._responseHandler(res))
+    .catch(err => this._errorHandler(err));
   }
 
-  updateUserProfileData(inputValuesData) {
+  //PATCH запрос на обновление данных пользователя
+  updateUserData(inputValuesData) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -43,17 +45,11 @@ export default class Api {
         about: inputValuesData.about
       })
     })
-    .then( res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    .then(res => this._responseHandler(res))
+    .catch(err => this._errorHandler(err));
   }
 
+  //POST запрос на добавление новой карточки
   addCard(cardData) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
@@ -63,66 +59,42 @@ export default class Api {
         link: cardData.link
       })
     })
-    .then( res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    .then(res => this._responseHandler(res))
+    .catch(err => this._errorHandler(err));
   }
 
+  //DELETE запрос на удаление карточки
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    .then(res => this._responseHandler(res))
+    .catch(err => this._errorHandler(err));
   }
 
+  //PUT запрос на добавление лайка карточке
   likeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: this._headers
     })
-    .then( res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    .then(res => this._responseHandler(res))
+    .catch(err => this._errorHandler(err));
   }
 
+  //DELETE запрос на снятие лайка с карточки
   unlikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
     })
-    .then( res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    .then(res => this._responseHandler(res))
+    .catch(err => this._errorHandler(err));
   }
 
-  changeAvatar({avatar}) {
+  //PATCH запрос на обновление аватара пользователя
+  updateAvatar({avatar}) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
@@ -130,15 +102,8 @@ export default class Api {
         avatar: avatar
       })
     })
-    .then( res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    .then(res => this._responseHandler(res))
+    .catch(err => this._errorHandler(err));
   }
 
 }

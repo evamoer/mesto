@@ -1,12 +1,10 @@
 export default class UserInfo {
-  constructor({profileNameElementSelector, profileAboutElementSelector, profileNameInputNameAttribute, profileAboutInputNameAttribute}) {
+  constructor({profileNameElementSelector, profileAboutElementSelector}) {
     this._profileNameElement = document.querySelector(profileNameElementSelector);
     this._profileAboutElement = document.querySelector(profileAboutElementSelector);
-    this._profileNameInputName = profileNameInputNameAttribute;
-    this._profileAboutInputName = profileAboutInputNameAttribute;
-
   }
 
+  //получаем данные пользователя и возвращаем объект
   getUserInfo() {
     const userData = ({
       profileName: this._profileNameElement.textContent,
@@ -14,8 +12,9 @@ export default class UserInfo {
     return userData;
   }
 
-  setUserInfo(inputValuesData) {
-      this._profileNameElement.textContent = inputValuesData.name;
-      this._profileAboutElement.textContent = inputValuesData.about;
+  //устанавливаем данные пользователя в профиль
+  setUserInfo(userData) {
+      this._profileNameElement.textContent = userData.name;
+      this._profileAboutElement.textContent = userData.about;
   }
 }
