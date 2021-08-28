@@ -81,10 +81,10 @@ const editProfilePopupElement = new PopupWithForm ({
     evt.preventDefault();
     editProfilePopupElement.renderLoading(true);
     api.updateUserData(inputValuesData)
-    .then((userData) => {
-      userInfoElement.setUserInfo(userData);
-    })
-    .finally(() => editProfilePopupElement.renderLoading(false))
+      .then((userData) => {
+        userInfoElement.setUserInfo(userData);
+      })
+      .finally(() => editProfilePopupElement.renderLoading(false))
   }
 });
 
@@ -125,8 +125,8 @@ const popupDeleteCard = new PopupWithForm({
 //обработчик нажатия кнопки открытия формы редактирования профиля
 const handleButtonForOpenProfileInfo = () => {
   const editProfileFormInputValues = userInfoElement.getUserInfo();
-  profileNameInputElement.value = editProfileFormInputValues['profileName'];
-  profileAboutInputElement.value = editProfileFormInputValues['profileAbout'];
+  profileNameInputElement.value = editProfileFormInputValues.username;
+  profileAboutInputElement.value = editProfileFormInputValues.about;
   editProfilePopupElement.open();
 };
 

@@ -13,7 +13,7 @@ export default class Api {
   }
 
   //проверка запроса при ошибке
-  _errorChecker(err) {
+  _errorHandler(err) {
     console.log(err);
   }
 
@@ -41,7 +41,7 @@ export default class Api {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: inputValuesData.name,
+        name: inputValuesData.username,
         about: inputValuesData.about
       })
     })

@@ -7,8 +7,8 @@ export default class UserInfo {
   //получаем данные пользователя и возвращаем объект
   getUserInfo() {
     const userData = ({
-      profileName: this._profileNameElement.textContent,
-      profileAbout: this._profileAboutElement.textContent});
+      username: this._profileNameElement.textContent,
+      about: this._profileAboutElement.textContent});
     return userData;
   }
 
