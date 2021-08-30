@@ -5,30 +5,19 @@ export default class Section {
     this._renderer = renderer;
   }
 
-  //вывод и добавление карточки в галерею
-  _render = (item, userData) => {
-    const itemElement = this._renderer(item, userData);
-    this._container.prepend(itemElement);
+  addItem(item) {
+    this._container.prepend(item);
   }
 
-  //добавление карточки
-  addItem = (item) => {
-    this._api.addCard(item)
-      .then((item) => {
-        this._api.getUserData()
-          .then((userData) => this._render(item, userData));
-      });
-  }
-
-  //получение и вывод всех текущих карточек с сервера
-  receiveItems = () => {
-    this._api.receiveCards()
-      .then((items) => {
-        this._api.getUserData()
-        .then((userData) => {
-          items.reverse().forEach(item => this._render(item, userData))
+  renderItems() {
+    const [items, userData] = [this._api.receiveCards(), this._api.getUserData()];
+    Promise.all([items, userData])
+      .then(([items, userData]) => {
+        items.reverse().forEach(item => {
+          const itemElement = this._renderer(item, userData);
+          this.addItem(itemElement);
         })
       })
-  }
-
+      .catch(err => console.log(`Ошибка: ${err}`));
+    }
 }

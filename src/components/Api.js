@@ -14,7 +14,7 @@ export default class Api {
 
   //проверка запроса при ошибке
   _errorHandler(err) {
-    console.log(err);
+    return console.log(`Ошибка: ${err}`);
   }
 
   //GET запрос на текущие карточки с сервера
@@ -73,20 +73,10 @@ export default class Api {
     .catch(err => this._errorHandler(err));
   }
 
-  //PUT запрос на добавление лайка карточке
-  likeCard(cardId) {
+  //PUT и DELETE запрос на добавление/удаление лайка карточке
+  likeCard(cardId, likeStatus) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: 'PUT',
-      headers: this._headers
-    })
-    .then(res => this._responseHandler(res))
-    .catch(err => this._errorHandler(err));
-  }
-
-  //DELETE запрос на снятие лайка с карточки
-  unlikeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: 'DELETE',
+      method: (likeStatus) ? 'DELETE' : 'PUT',
       headers: this._headers
     })
     .then(res => this._responseHandler(res))

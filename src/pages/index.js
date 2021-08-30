@@ -40,12 +40,12 @@ const api = new Api({
 });
 
 //обработчик нажатия на карточку для полного изображения
-const handleCardClick = ((evt) => {
-  popupWithImage.open(evt);
+const handleFullImage = ((imageData) => {
+  popupWithImage.open(imageData);
 });
 
 //обработчик нажатия на кнопку удаления карточки
-const handleDeleteClick = ((id) => {
+const handleDeleteCard = ((id) => {
   popupDeleteCard.open();
   return new Promise((resolve, reject) => {
     popupDeleteCardForm.onsubmit = () => {
@@ -59,19 +59,18 @@ api.getUserData()
   .then((userData) => {
     userInfoElement.setUserInfo(userData);
     userProfileAvatar.src = userData.avatar;
-  });
+  })
+  .catch(err => console.log(`Ошибка: ${err}`));
 
 //генерация и возврат одной карточки
 const renderCard = ((item, userData) => {
-  const card = new Card(item, userData, api, cardSettings, handleCardClick, handleDeleteClick);
+  const card = new Card(item, userData, api, cardSettings, handleFullImage, handleDeleteCard);
   return card.generateCard();
 });
 
 //создание галереи и получение всех карточек с сервера
 const gallerySection = new Section(api, {containerSelector: '.gallery-table', renderer: renderCard});
-gallerySection.receiveItems();
-
-
+gallerySection.renderItems();
 
 //экземпляр для попапа редактирования информации в профиле
 const editProfilePopupElement = new PopupWithForm ({
@@ -84,6 +83,7 @@ const editProfilePopupElement = new PopupWithForm ({
       .then((userData) => {
         userInfoElement.setUserInfo(userData);
       })
+      .catch(err => console.log(`Ошибка: ${err}`))
       .finally(() => editProfilePopupElement.renderLoading(false))
   }
 });
@@ -109,6 +109,7 @@ const editAvatarPopupElement = new PopupWithForm({
       .then((data) => {
         document.querySelector('.profile__avatar').src = data.avatar;
       })
+      .catch(err => console.log(`Ошибка: ${err}`))
       .finally(() => editAvatarPopupElement.renderLoading(false))
   }
 })
