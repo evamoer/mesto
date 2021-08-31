@@ -24,5 +24,6 @@ export const cardSettings = {
 
 export const profileSettings = {
   profileNameElementSelector: '.profile__name',
-  profileAboutElementSelector: '.profile__about'
+  profileAboutElementSelector: '.profile__about',
+  profileAvatarSelector: '.profile__avatar'
 }

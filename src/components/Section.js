@@ -5,19 +5,14 @@ export default class Section {
     this._renderer = renderer;
   }
 
-  addItem(item) {
-    this._container.prepend(item);
+  addItem(itemElement) {
+    this._container.prepend(itemElement);
   }
 
-  renderItems() {
-    const [items, userData] = [this._api.receiveCards(), this._api.getUserData()];
-    Promise.all([items, userData])
-      .then(([items, userData]) => {
-        items.reverse().forEach(item => {
-          const itemElement = this._renderer(item, userData);
-          this.addItem(itemElement);
-        })
-      })
-      .catch(err => console.log(`Ошибка: ${err}`));
-    }
+  renderItems(items, userData) {
+    items.reverse().forEach(item => {
+      const itemElement = this._renderer(item, userData);
+      this.addItem(itemElement);
+    })
+  }
 }

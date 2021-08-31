@@ -11,7 +11,6 @@ import {validatorSettings, profileSettings, cardSettings} from '../utils/constan
 const buttonOpenProfile = document.querySelector('.button_type_edit');
 const buttonOpenAddCard = document.querySelector('.button_type_add');
 const buttonOpenAvatar = document.querySelector('.profile__avatar-container');
-const userProfileAvatar = document.querySelector('.profile__avatar');
 const popupEditProfileForm = document.getElementById('popup__edit-profile-form');
 const profileNameInputElement = popupEditProfileForm.elements['profile-name']
 const profileAboutInputElement = popupEditProfileForm.elements['profile-about']
@@ -23,10 +22,8 @@ const validatorProfileForm = new FormValidator(validatorSettings, popupEditProfi
 const validatorAddCardForm = new FormValidator(validatorSettings, popupAddCardForm);
 const validatorDeleteCardForm = new FormValidator(validatorSettings, popupDeleteCardForm);
 const validatorAvatarForm = new FormValidator(validatorSettings, popupEditAvatarForm);
-
 //экземпляр для попапа с полным изображением карточки
 const popupWithImage = new PopupWithImage ('.popup_type_full-image');
-
 //экземпляр для информации профиля
 const userInfoElement = new UserInfo (profileSettings);
 
@@ -54,23 +51,23 @@ const handleDeleteCard = ((id) => {
   });
 });
 
-//получаем данные о пользователе: профиль и аватар
-api.getUserData()
-  .then((userData) => {
-    userInfoElement.setUserInfo(userData);
-    userProfileAvatar.src = userData.avatar;
-  })
-  .catch(err => console.log(`Ошибка: ${err}`));
-
 //генерация и возврат одной карточки
 const renderCard = ((item, userData) => {
   const card = new Card(item, userData, api, cardSettings, handleFullImage, handleDeleteCard);
   return card.generateCard();
 });
 
-//создание галереи и получение всех карточек с сервера
+//экземпляр секции галереи
 const gallerySection = new Section(api, {containerSelector: '.gallery-table', renderer: renderCard});
-gallerySection.renderItems();
+
+//получаем все карточки с сервера и информацию о пользователе, отрисовываем
+const [items, userData] = [api.receiveCards(), api.getUserData()];
+Promise.all([items, userData])
+  .then(([items, userData]) => {
+    gallerySection.renderItems(items, userData);
+    userInfoElement.setUserInfo(userData);
+  })
+  .catch(err => console.log(`Ошибка: ${err}`));
 
 //экземпляр для попапа редактирования информации в профиле
 const editProfilePopupElement = new PopupWithForm ({
@@ -85,7 +82,8 @@ const editProfilePopupElement = new PopupWithForm ({
       })
       .catch(err => console.log(`Ошибка: ${err}`))
       .finally(() => editProfilePopupElement.renderLoading(false))
-  }
+  },
+  submitButtonLabel: 'Сохранить'
 });
 
 //экземпляр для попапа добавления карточки в галерею
@@ -94,8 +92,17 @@ const addCardPopupElement = new PopupWithForm({
   formValidator: validatorAddCardForm,
   handleFormSubmit: (evt, inputValuesData) => {
     evt.preventDefault();
-    gallerySection.addItem(inputValuesData);
-  }
+    addCardPopupElement.renderLoading(true);
+    const [item, userData] = [api.addCard(inputValuesData), api.getUserData()];
+    Promise.all([item, userData])
+      .then(([item, userData]) => {
+        const newCard = renderCard(item, userData);
+        gallerySection.addItem(newCard);
+      })
+      .catch(err => console.log(`Ошибка: ${err}`))
+      .finally(() => addCardPopupElement.renderLoading(false));
+  },
+  submitButtonLabel: 'Создать'
 });
 
 //экземпляр для попапа редактирования аватара в профиле
@@ -107,11 +114,12 @@ const editAvatarPopupElement = new PopupWithForm({
     editAvatarPopupElement.renderLoading(true);
     api.updateAvatar(inputValuesData)
       .then((data) => {
-        document.querySelector('.profile__avatar').src = data.avatar;
+        userInfoElement.setUserInfo(data);
       })
       .catch(err => console.log(`Ошибка: ${err}`))
       .finally(() => editAvatarPopupElement.renderLoading(false))
-  }
+  },
+  submitButtonLabel: 'Сохранить'
 })
 
 //экземпляр для попапа удаления карточки
@@ -133,8 +141,8 @@ const handleButtonForOpenProfileInfo = () => {
 
 //все слушатели + включение валидации для форм
 buttonOpenProfile.addEventListener('click', handleButtonForOpenProfileInfo);
-buttonOpenAddCard.addEventListener('click', addCardPopupElement.open.bind(addCardPopupElement));
-buttonOpenAvatar.addEventListener('click', editAvatarPopupElement.open.bind(editAvatarPopupElement));
+buttonOpenAddCard.addEventListener('click', () => addCardPopupElement.open());
+buttonOpenAvatar.addEventListener('click', () => editAvatarPopupElement.open());
 addCardPopupElement.setEventListeners();
 editProfilePopupElement.setEventListeners();
 popupWithImage.setEventListeners();
