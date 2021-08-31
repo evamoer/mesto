@@ -11,6 +11,12 @@ export default class PopupWithForm extends Popup {
     this._submitButtonLabel = submitButtonLabel;
   }
 
+  setInputValues(inputValuesData) {
+    this._inputList.forEach(input => {
+      input.value = inputValuesData[input.id];
+    })
+  }
+
   _getInputValues() {
     const inputValuesData = {};
     this._inputList.forEach((input) => {

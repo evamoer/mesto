@@ -8,24 +8,19 @@ import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import {validatorSettings, profileSettings, cardSettings} from '../utils/constants.js';
 
+//кнопки для открытия попапов
 const buttonOpenProfile = document.querySelector('.button_type_edit');
 const buttonOpenAddCard = document.querySelector('.button_type_add');
 const buttonOpenAvatar = document.querySelector('.profile__avatar-container');
-const popupEditProfileForm = document.getElementById('popup__edit-profile-form');
-const profileNameInputElement = popupEditProfileForm.elements['profile-name']
-const profileAboutInputElement = popupEditProfileForm.elements['profile-about']
-const popupEditAvatarForm = document.getElementById('popup__edit-avatar-form');
-const popupAddCardForm = document.getElementById('popup__add-card-form');
-const popupDeleteCardForm = document.getElementById('popup__delete-card-form');
 //экземпляры валидаторов для всех форм
-const validatorProfileForm = new FormValidator(validatorSettings, popupEditProfileForm);
-const validatorAddCardForm = new FormValidator(validatorSettings, popupAddCardForm);
-const validatorDeleteCardForm = new FormValidator(validatorSettings, popupDeleteCardForm);
-const validatorAvatarForm = new FormValidator(validatorSettings, popupEditAvatarForm);
+const validatorProfileForm = new FormValidator(validatorSettings, 'popup__edit-profile-form');
+const validatorAddCardForm = new FormValidator(validatorSettings, 'popup__add-card-form');
+const validatorDeleteCardForm = new FormValidator(validatorSettings, 'popup__delete-card-form');
+const validatorAvatarForm = new FormValidator(validatorSettings, 'popup__edit-avatar-form');
 //экземпляр для попапа с полным изображением карточки
-const popupWithImage = new PopupWithImage ('.popup_type_full-image');
+const popupWithImage = new PopupWithImage('.popup_type_full-image');
 //экземпляр для информации профиля
-const userInfoElement = new UserInfo (profileSettings);
+const userInfoElement = new UserInfo(profileSettings);
 
 //экземпляр для апи
 const api = new Api({
@@ -37,17 +32,14 @@ const api = new Api({
 });
 
 //обработчик нажатия на карточку для полного изображения
-const handleFullImage = ((imageData) => {
-  popupWithImage.open(imageData);
-});
+const handleFullImage = (imageData => popupWithImage.open(imageData));
 
 //обработчик нажатия на кнопку удаления карточки
 const handleDeleteCard = ((id) => {
   popupDeleteCard.open();
   return new Promise((resolve, reject) => {
-    popupDeleteCardForm.onsubmit = () => {
-      resolve(api.deleteCard(id))
-    }
+    const popupDeleteCardForm = document.getElementById('popup__delete-card-form');
+    popupDeleteCardForm.onsubmit = () => resolve(api.deleteCard(id));
   });
 });
 
@@ -61,8 +53,7 @@ const renderCard = ((item, userData) => {
 const gallerySection = new Section(api, {containerSelector: '.gallery-table', renderer: renderCard});
 
 //получаем все карточки с сервера и информацию о пользователе, отрисовываем
-const [items, userData] = [api.receiveCards(), api.getUserData()];
-Promise.all([items, userData])
+Promise.all([api.getCards(), api.getUserData()])
   .then(([items, userData]) => {
     gallerySection.renderItems(items, userData);
     userInfoElement.setUserInfo(userData);
@@ -77,9 +68,7 @@ const editProfilePopupElement = new PopupWithForm ({
     evt.preventDefault();
     editProfilePopupElement.renderLoading(true);
     api.updateUserData(inputValuesData)
-      .then((userData) => {
-        userInfoElement.setUserInfo(userData);
-      })
+      .then(userData => userInfoElement.setUserInfo(userData))
       .catch(err => console.log(`Ошибка: ${err}`))
       .finally(() => editProfilePopupElement.renderLoading(false))
   },
@@ -93,8 +82,7 @@ const addCardPopupElement = new PopupWithForm({
   handleFormSubmit: (evt, inputValuesData) => {
     evt.preventDefault();
     addCardPopupElement.renderLoading(true);
-    const [item, userData] = [api.addCard(inputValuesData), api.getUserData()];
-    Promise.all([item, userData])
+    Promise.all([api.addCard(inputValuesData), api.getUserData()])
       .then(([item, userData]) => {
         const newCard = renderCard(item, userData);
         gallerySection.addItem(newCard);
@@ -113,9 +101,7 @@ const editAvatarPopupElement = new PopupWithForm({
     evt.preventDefault();
     editAvatarPopupElement.renderLoading(true);
     api.updateAvatar(inputValuesData)
-      .then((data) => {
-        userInfoElement.setUserInfo(data);
-      })
+      .then(data => userInfoElement.setUserInfo(data))
       .catch(err => console.log(`Ошибка: ${err}`))
       .finally(() => editAvatarPopupElement.renderLoading(false))
   },
@@ -126,16 +112,13 @@ const editAvatarPopupElement = new PopupWithForm({
 const popupDeleteCard = new PopupWithForm({
   popupSelector: '.popup_type_delete-card',
   formValidator: validatorDeleteCardForm,
-  handleFormSubmit: (evt) => {
-    evt.preventDefault();
-  }
+  handleFormSubmit: (evt) => evt.preventDefault()
 });
 
 //обработчик нажатия кнопки открытия формы редактирования профиля
 const handleButtonForOpenProfileInfo = () => {
   const editProfileFormInputValues = userInfoElement.getUserInfo();
-  profileNameInputElement.value = editProfileFormInputValues.username;
-  profileAboutInputElement.value = editProfileFormInputValues.about;
+  editProfilePopupElement.setInputValues(editProfileFormInputValues);
   editProfilePopupElement.open();
 };
 
@@ -151,5 +134,3 @@ editAvatarPopupElement.setEventListeners();
 validatorProfileForm.enableValidation();
 validatorAddCardForm.enableValidation();
 validatorAvatarForm.enableValidation();
-
-

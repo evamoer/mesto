@@ -53,33 +53,38 @@ export default class Card {
       .catch(err => console.log(`Ошибка: ${err}`));
   }
 
+  //скрываем иконку корзины, если карточка создана не нами
+  _renderDeleteIcon() {
+    if (this._item.owner._id !== this._userData._id) {
+      const buttonDeleteCard = this._element.querySelector(this._deleteCardButtonSelector);
+      buttonDeleteCard.style.visibility = 'hidden';
+    }
+  }
+
   //показываем состояние и счётчик кнопки лайка
   _renderLike(cardData) {
     const cardLikeNumber = this._element.querySelector(this._cardLikeNumberSelector);
     const buttonLikeCard = this._element.querySelector(this._likeCardButtonSelector);
-    cardLikeNumber.textContent = cardData.likes.length;
 
+    cardLikeNumber.textContent = cardData.likes.length;
     this._isLiked(cardData.likes)
       .then(isLikeActive => {
-        if (isLikeActive) {
-          buttonLikeCard.classList.add(this._activeLikeButtonClass);
-        } else {
-          buttonLikeCard.classList.remove(this._activeLikeButtonClass);
-        }
+        (isLikeActive) ? buttonLikeCard.classList.add(this._activeLikeButtonClass)
+        : buttonLikeCard.classList.remove(this._activeLikeButtonClass);
       })
       .catch(err => console.log(`Ошибка: ${err}`));
   }
 
-  //определяем, есть лайк на карточке (true) или нет (false)
-  _isLiked(arrLikes) {
+  //определяем, есть лайк на карточке
+  _isLiked(likesArray) {
     return new Promise ((resolve, reject) => {
-      resolve(arrLikes.some(like => like._id === this._userData._id));
+      resolve(likesArray.some(like => like._id === this._userData._id));
     })
   }
 
   //определяем _актуальные_ данные по карточке
   _getCardData() {
-    return this._api.receiveCards()
+    return this._api.getCards()
       .then(cardsArray => {
         return (cardsArray.find(card => card._id === this._item._id));
       })
@@ -89,18 +94,21 @@ export default class Card {
   //обрабатываем клик по кнопке лайка
   _handleLikeClick() {
     this._getCardData()
+    //определяем, стоит ли лайк на карточке, если true - убираем, если false - ставим
       .then(cardData => this._isLiked(cardData.likes))
-      .then(isLikeActive => { //если true - убираем, если false - ставим
+      .then(isLikeActive => {
         this._api.likeCard(this._item._id, isLikeActive)
-          .then(updatedCardData => {
-            this._renderLike(updatedCardData);
+          .then(updatedCardData => this._renderLike(updatedCardData));
           })
-      })
       .catch(err => console.log(`Ошибка: ${err}`));
     }
 
-  //перечисляем все обработчики карточки
-  _setEventListeners(buttonDeleteCard, buttonLikeCard, cardImageContainer) {
+  //устанавливаем все обработчики карточки
+  _setEventListeners() {
+    const buttonDeleteCard = this._element.querySelector(this._deleteCardButtonSelector);
+    const buttonLikeCard = this._element.querySelector( this._likeCardButtonSelector);
+    const cardImageContainer = this._element.querySelector(this._cardImageContainerSelector);
+
     cardImageContainer.addEventListener('click', (evt) => this._openFullImage(evt));
     buttonDeleteCard.addEventListener('click', () => this._deleteCard());
     buttonLikeCard.addEventListener('click', () => this._handleLikeClick());
@@ -111,25 +119,14 @@ export default class Card {
     this._element = this._getTemplate();
     const cardImage = this._element.querySelector(this._cardImageSelector);
     const cardTitle = this._element.querySelector(this._cardTitleSelector);
-    const buttonDeleteCard = this._element.querySelector(this._deleteCardButtonSelector);
-    const buttonLikeCard = this._element.querySelector( this._likeCardButtonSelector);
-    const cardImageContainer = this._element.querySelector(this._cardImageContainerSelector);
 
     //подгружаем изображение и название
     cardImage.src = this._item.link;
     cardImage.alt = this._item.name;
     cardTitle.textContent = this._item.name;
-
-    //если карточка создана не нами, то скрываем кнопку удаления
-    if (this._item.owner._id !== this._userData._id) {
-      buttonDeleteCard.style.visibility = 'hidden';
-    }
-
-    //показываем состояние и счётчик кнопки лайка
+    this._renderDeleteIcon();
     this._renderLike(this._item);
-
-    //устанавливаем обработчики на карточку и возвращаем её
-    this._setEventListeners(buttonDeleteCard, buttonLikeCard, cardImageContainer);
+    this._setEventListeners();
     return this._element;
   }
 }

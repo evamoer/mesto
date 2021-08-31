@@ -1,12 +1,12 @@
 export default class FormValidator {
-    constructor({inactiveButtonClass, inputErrorClass, errorClass, submitButtonSelector, inputSelector, closeButtonSelector }, formElement) {
-      this._formElement = formElement;
+    constructor({inactiveButtonClass, inputErrorClass, errorClass, submitButtonSelector, inputSelector, closeButtonSelector }, formId) {
+      this._formElement = document.getElementById(formId);
       this._inactiveButtonClass = inactiveButtonClass;
       this._inputErrorClass = inputErrorClass;
       this._errorClass = errorClass;
-      this._submitButtonElement = formElement.querySelector(submitButtonSelector);
-      this._inputList = Array.from(formElement.querySelectorAll(inputSelector));
-      this._closeButtonElement = formElement.closest('.popup__container').querySelector(closeButtonSelector);
+      this._submitButtonElement = this._formElement.querySelector(submitButtonSelector);
+      this._inputList = Array.from(this._formElement.querySelectorAll(inputSelector));
+      this._closeButtonElement = this._formElement.closest('.popup__container').querySelector(closeButtonSelector);
     }
 
     //определяем ошибку валидации
@@ -71,9 +71,7 @@ export default class FormValidator {
 
     //устанавливаем обработчики
     _setEventListeners() {
-      this._formElement.addEventListener('submit', (evt) => {
-          evt.preventDefault();
-      });
+      this._formElement.addEventListener('submit', (evt) => evt.preventDefault());
 
       this._inputList.forEach((inputElement) => {
         inputElement.addEventListener('input', () => {

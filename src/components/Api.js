@@ -12,18 +12,12 @@ export default class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  //проверка запроса при ошибке
-  _errorHandler(err) {
-    return console.log(`Ошибка: ${err}`);
-  }
-
   //GET запрос на текущие карточки с сервера
-  receiveCards() {
+  getCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     })
-      .then(res => this._responseHandler(res))
-      .catch(err => this._errorHandler(err));
+      .then(res => this._responseHandler(res));
   }
 
   //GET запрос на данные пользователя
@@ -31,8 +25,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     })
-    .then(res => this._responseHandler(res))
-    .catch(err => this._errorHandler(err));
+    .then(res => this._responseHandler(res));
   }
 
   //PATCH запрос на обновление данных пользователя
@@ -45,8 +38,7 @@ export default class Api {
         about: inputValuesData.about
       })
     })
-    .then(res => this._responseHandler(res))
-    .catch(err => this._errorHandler(err));
+    .then(res => this._responseHandler(res));
   }
 
   //POST запрос на добавление новой карточки
@@ -59,8 +51,7 @@ export default class Api {
         link: cardData.link
       })
     })
-    .then(res => this._responseHandler(res))
-    .catch(err => this._errorHandler(err));
+    .then(res => this._responseHandler(res));
   }
 
   //DELETE запрос на удаление карточки
@@ -69,8 +60,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-    .then(res => this._responseHandler(res))
-    .catch(err => this._errorHandler(err));
+    .then(res => this._responseHandler(res));
   }
 
   //PUT и DELETE запрос на добавление/удаление лайка карточке
@@ -79,8 +69,7 @@ export default class Api {
       method: (likeStatus) ? 'DELETE' : 'PUT',
       headers: this._headers
     })
-    .then(res => this._responseHandler(res))
-    .catch(err => this._errorHandler(err));
+    .then(res => this._responseHandler(res));
   }
 
   //PATCH запрос на обновление аватара пользователя
@@ -92,8 +81,7 @@ export default class Api {
         avatar: avatar
       })
     })
-    .then(res => this._responseHandler(res))
-    .catch(err => this._errorHandler(err));
+    .then(res => this._responseHandler(res));
   }
 
 }
