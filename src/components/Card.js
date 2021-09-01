@@ -1,5 +1,5 @@
 export default class Card {
-  constructor (item, userData, api,
+  constructor (item, userId, api,
     {
       cardTemplateSelector,
       cardElementSelector,
@@ -14,7 +14,7 @@ export default class Card {
       handleFullImage, handleDeleteCard) {
     //параметры, связанные с апи
     this._item = item;
-    this._userData = userData;
+    this._userId = userId;
     this._api = api;
     //параметры, связанные с карточкой
     this._cardTemplateSelector = cardTemplateSelector;
@@ -40,12 +40,6 @@ export default class Card {
     return cardElement;
   }
 
-  //обрабатываем клик по карточке => передаем данные о ней в попап с полным изображением
-  _openFullImage(evt) {
-    const imageData = {name: evt.target.alt, link: evt.target.src};
-    this._handleFullImage(imageData);
-  }
-
   //удаляем карточку при сабмите во всплывающем окне
   _deleteCard() {
     this._handleDeleteCard(this._item._id)
@@ -55,7 +49,8 @@ export default class Card {
 
   //скрываем иконку корзины, если карточка создана не нами
   _renderDeleteIcon() {
-    if (this._item.owner._id !== this._userData._id) {
+
+    if (this._item.owner._id !== this._userId) {
       const buttonDeleteCard = this._element.querySelector(this._deleteCardButtonSelector);
       buttonDeleteCard.style.visibility = 'hidden';
     }
@@ -67,39 +62,24 @@ export default class Card {
     const buttonLikeCard = this._element.querySelector(this._likeCardButtonSelector);
 
     cardLikeNumber.textContent = cardData.likes.length;
-    this._isLiked(cardData.likes)
-      .then(isLikeActive => {
-        (isLikeActive) ? buttonLikeCard.classList.add(this._activeLikeButtonClass)
-        : buttonLikeCard.classList.remove(this._activeLikeButtonClass);
-      })
-      .catch(err => console.log(`Ошибка: ${err}`));
+    const isLikeActive = this._isLiked(cardData.likes);
+    (isLikeActive) ? buttonLikeCard.classList.add(this._activeLikeButtonClass)
+      : buttonLikeCard.classList.remove(this._activeLikeButtonClass);
   }
 
   //определяем, есть лайк на карточке
   _isLiked(likesArray) {
-    return new Promise ((resolve, reject) => {
-      resolve(likesArray.some(like => like._id === this._userData._id));
-    })
-  }
-
-  //определяем _актуальные_ данные по карточке
-  _getCardData() {
-    return this._api.getCards()
-      .then(cardsArray => {
-        return (cardsArray.find(card => card._id === this._item._id));
-      })
-      .catch(err => console.log(`Ошибка: ${err}`));
+    return likesArray.some(like => like._id === this._userId);
   }
 
   //обрабатываем клик по кнопке лайка
   _handleLikeClick() {
-    this._getCardData()
-    //определяем, стоит ли лайк на карточке, если true - убираем, если false - ставим
-      .then(cardData => this._isLiked(cardData.likes))
-      .then(isLikeActive => {
-        this._api.likeCard(this._item._id, isLikeActive)
-          .then(updatedCardData => this._renderLike(updatedCardData));
-          })
+    const isLikeActive = this._isLiked(this._item.likes);
+    this._api.likeCard(this._item._id, isLikeActive)
+      .then(updatedCardData => {
+        this._renderLike(updatedCardData);
+        this._item.likes = updatedCardData.likes;
+      })
       .catch(err => console.log(`Ошибка: ${err}`));
     }
 
@@ -109,7 +89,7 @@ export default class Card {
     const buttonLikeCard = this._element.querySelector( this._likeCardButtonSelector);
     const cardImageContainer = this._element.querySelector(this._cardImageContainerSelector);
 
-    cardImageContainer.addEventListener('click', (evt) => this._openFullImage(evt));
+    cardImageContainer.addEventListener('click', (evt) => this._handleFullImage({name: evt.target.alt, link: evt.target.src}));
     buttonDeleteCard.addEventListener('click', () => this._deleteCard());
     buttonLikeCard.addEventListener('click', () => this._handleLikeClick());
   }

@@ -17,7 +17,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     })
-      .then(res => this._responseHandler(res));
+      .then(this._responseHandler);
   }
 
   //GET запрос на данные пользователя

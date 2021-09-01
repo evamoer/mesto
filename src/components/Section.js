@@ -9,9 +9,9 @@ export default class Section {
     this._container.prepend(itemElement);
   }
 
-  renderItems(items, userData) {
+  renderItems(items, userdataId) {
     items.reverse().forEach(item => {
-      const itemElement = this._renderer(item, userData);
+      const itemElement = this._renderer(item, userdataId);
       this.addItem(itemElement);
     })
   }

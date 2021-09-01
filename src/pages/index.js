@@ -21,6 +21,8 @@ const validatorAvatarForm = new FormValidator(validatorSettings, 'popup__edit-av
 const popupWithImage = new PopupWithImage('.popup_type_full-image');
 //экземпляр для информации профиля
 const userInfoElement = new UserInfo(profileSettings);
+//переменная для ID пользователя
+let userId;
 
 //экземпляр для апи
 const api = new Api({
@@ -35,17 +37,19 @@ const api = new Api({
 const handleFullImage = (imageData => popupWithImage.open(imageData));
 
 //обработчик нажатия на кнопку удаления карточки
-const handleDeleteCard = ((id) => {
+const handleDeleteCard = (cardId => {
   popupDeleteCard.open();
   return new Promise((resolve, reject) => {
     const popupDeleteCardForm = document.getElementById('popup__delete-card-form');
-    popupDeleteCardForm.onsubmit = () => resolve(api.deleteCard(id));
+    popupDeleteCardForm.onsubmit = () => resolve(api.deleteCard(cardId));
   });
 });
 
+
 //генерация и возврат одной карточки
-const renderCard = ((item, userData) => {
-  const card = new Card(item, userData, api, cardSettings, handleFullImage, handleDeleteCard);
+const renderCard = (item => {
+  const userIdValue = userId;
+  const card = new Card(item, userIdValue, api, cardSettings, handleFullImage, handleDeleteCard);
   return card.generateCard();
 });
 
@@ -55,7 +59,8 @@ const gallerySection = new Section(api, {containerSelector: '.gallery-table', re
 //получаем все карточки с сервера и информацию о пользователе, отрисовываем
 Promise.all([api.getCards(), api.getUserData()])
   .then(([items, userData]) => {
-    gallerySection.renderItems(items, userData);
+    userId = userData._id;
+    gallerySection.renderItems(items, userId);
     userInfoElement.setUserInfo(userData);
   })
   .catch(err => console.log(`Ошибка: ${err}`));
@@ -70,7 +75,7 @@ const editProfilePopupElement = new PopupWithForm ({
     api.updateUserData(inputValuesData)
       .then(userData => userInfoElement.setUserInfo(userData))
       .catch(err => console.log(`Ошибка: ${err}`))
-      .finally(() => editProfilePopupElement.renderLoading(false))
+      .finally(() => editProfilePopupElement.renderLoading(false));
   },
   submitButtonLabel: 'Сохранить'
 });
@@ -82,9 +87,9 @@ const addCardPopupElement = new PopupWithForm({
   handleFormSubmit: (evt, inputValuesData) => {
     evt.preventDefault();
     addCardPopupElement.renderLoading(true);
-    Promise.all([api.addCard(inputValuesData), api.getUserData()])
-      .then(([item, userData]) => {
-        const newCard = renderCard(item, userData);
+    api.addCard(inputValuesData)
+      .then(newCardData => {
+        const newCard = renderCard(newCardData);
         gallerySection.addItem(newCard);
       })
       .catch(err => console.log(`Ошибка: ${err}`))
@@ -103,7 +108,7 @@ const editAvatarPopupElement = new PopupWithForm({
     api.updateAvatar(inputValuesData)
       .then(data => userInfoElement.setUserInfo(data))
       .catch(err => console.log(`Ошибка: ${err}`))
-      .finally(() => editAvatarPopupElement.renderLoading(false))
+      .finally(() => editAvatarPopupElement.renderLoading(false));
   },
   submitButtonLabel: 'Сохранить'
 })
