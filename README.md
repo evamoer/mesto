@@ -25,14 +25,19 @@
 
 Для установки данного проекта локально у себя, необходимо предварительно склонировать репозиторий командой:
 
-    git clone git@github.com:evamoer/mesto.git
+<code>git clone git@github.com:evamoer/mesto.git</code>
+    
+Предварительно необходимо проинсталлировать проект командой:
+
+<code>npm install</code>
 
 Для режима разработки можно воспользоваться командой: 
 
-    npm run dev
+<code>npm run dev</code>
+
 Для получения бандла проекта требуется команда: 
 
-    npm run build
+<code>npm run build</code>
 
 ## Проект на GitHub Pages
 
